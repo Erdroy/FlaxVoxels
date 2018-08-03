@@ -1,0 +1,12 @@
+{
+	"ID": "5807b0bd4b5b2ae80bcfae876cb66d92",
+	"TypeName": "FlaxEditor.Content.Settings.GameSettings",
+	"EngineBuild": 6163,
+	"Data": {
+	"ProductName": "Flax Voxels",
+	"CompanyName": "Flax Engine",
+	"Version": "1.0",
+	"FirstScene": "74a68a984824b4510d12589f199ad68f",
+	"Time": "08a20b2649a7d95de471f2862b376fd7"
+}
+}
