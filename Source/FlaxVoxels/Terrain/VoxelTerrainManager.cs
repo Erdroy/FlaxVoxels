@@ -30,7 +30,7 @@ namespace FlaxVoxels.Terrain
             _terrainMap = new VoxelTerrainMap(this);
 
             // Create temporary test chunk
-            _testChunk = new VoxelTerrainChunk(new Vector3Int(0, 0, 0));
+            _testChunk = new VoxelTerrainChunk(_terrainMap, new Vector3Int(0, 0, 0));
 
             _testChunk.WorkerGenerateVoxels(_currentGenerator);
             _testChunk.WorkerGenerateMesh(_currentMesher);
@@ -75,6 +75,11 @@ namespace FlaxVoxels.Terrain
         ///     After this time, all resources of a cached chunk will be released.
         /// </summary>
         public int MaxChunkCacheTime { get; set; } = 60;
+
+        /// <summary>
+        ///     The world seed.
+        /// </summary>
+        public int WorldSeed { get; set; } = 0xDEAD;
 
         /// <summary>
         ///     The current active voxel terrain manager.

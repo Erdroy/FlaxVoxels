@@ -48,7 +48,7 @@ namespace FlaxVoxels.Terrain.Meshing
             _triangles = new List<int>();
         }
 
-        public void GenerateMesh(Vector3Int worldPosition, VoxelTerrainChunk chunk, ref Model chunkModel)
+        public void GenerateMesh(Vector3Int worldPosition, VoxelTerrainChunk chunk)
         {
             // Generate in order: Y [XZ]
             for (var y = 0; y < VoxelTerrainChunk.ChunkHeight; y++)
@@ -106,7 +106,7 @@ namespace FlaxVoxels.Terrain.Meshing
             Debug.Log("Chunk generated! Vertex count " + _vertices.Count);
 
             // Apply mesh
-            chunkModel.LODs[0].Meshes[0].UpdateMesh(_vertices.ToArray(), _triangles.ToArray(), _normals.ToArray(), null,
+            chunk.Model.LODs[0].Meshes[0].UpdateMesh(_vertices.ToArray(), _triangles.ToArray(), _normals.ToArray(), null,
                 _uvs.ToArray(), _colors.ToArray());
         }
 

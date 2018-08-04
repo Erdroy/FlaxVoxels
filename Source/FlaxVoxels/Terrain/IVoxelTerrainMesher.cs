@@ -1,6 +1,5 @@
 // FlaxVoxels (c) 2018 Damian 'Erdroy' Korczowski
 
-using FlaxEngine;
 using FlaxVoxels.Math;
 using FlaxVoxels.Terrain;
 
@@ -8,7 +7,7 @@ namespace FlaxVoxels
 {
     internal interface IVoxelTerrainMesher
     {
-        void GenerateMesh(Vector3Int worldPosition, VoxelTerrainChunk chunk, ref Model chunkModel);
+        void GenerateMesh(Vector3Int worldPosition, VoxelTerrainChunk chunk);
         void Clear();
     }
 }

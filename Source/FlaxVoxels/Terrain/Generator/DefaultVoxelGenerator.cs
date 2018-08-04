@@ -8,24 +8,24 @@ namespace FlaxVoxels.Terrain.Generator
     {
         public void GenerateVoxels(Vector3Int worldPosition, ref Voxel[,,] voxels)
         {
-            for (var x = 0; x < VoxelTerrainChunk.ChunkWidth; x++)
+            Simplex.Noise.Seed = VoxelTerrainManager.Current.WorldSeed;
+            var noise2D = Simplex.Noise.Calc2D(VoxelTerrainChunk.ChunkWidth, VoxelTerrainChunk.ChunkLength, 0.025f);
+
+            const float baseLevel = 2.0f;
+            const float hillLevel = 5.0f;
+
             for (var y = 0; y < VoxelTerrainChunk.ChunkHeight; y++)
+            for (var x = 0; x < VoxelTerrainChunk.ChunkWidth; x++)
             for (var z = 0; z < VoxelTerrainChunk.ChunkLength; z++)
             {
-                var voxel = Voxel.Air;
+                var noise = (noise2D[x, z] / 256.0f) * hillLevel;
+                noise += baseLevel;
 
-                // Generate voxel
-                if (y <= 4)
-                    voxel = new Voxel(1);
-
-                // Set voxel
-                voxels[x, y, z] = voxel;
+                if (y > noise)
+                    continue;
+                
+                voxels[x, y, z] = new Voxel(1); // TODO: Use proper material
             }
-
-            voxels[8, 6, 8] = Voxel.Solid;
-            voxels[8, 5, 8] = Voxel.Solid;
-            voxels[9, 5, 8] = Voxel.Solid;
-            voxels[9, 5, 9] = Voxel.Solid;
         }
     }
 }
