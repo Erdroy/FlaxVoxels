@@ -1,4 +1,5 @@
-﻿
+﻿// FlaxVoxels (c) 2018 Damian 'Erdroy' Korczowski
+
 using System;
 using System.Collections.Generic;
 using FlaxEngine;

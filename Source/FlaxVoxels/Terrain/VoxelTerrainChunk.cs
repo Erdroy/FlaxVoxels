@@ -1,5 +1,7 @@
-﻿
+﻿// FlaxVoxels (c) 2018 Damian 'Erdroy' Korczowski
+
 using System;
+using System.Runtime.CompilerServices;
 using FlaxEngine;
 using FlaxVoxels.Math;
 
@@ -47,31 +49,41 @@ namespace FlaxVoxels.Terrain
 	        mesher.GenerateMesh(WorldPosition, this, ref _model);
         }
 
-	    public Voxel GetVoxelFast(Vector3Int voxelPosition)
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Voxel GetVoxelFast(Vector3Int voxelPosition)
 	    {
 	        return _voxels[voxelPosition.X, voxelPosition.Y, voxelPosition.Z];
 	    }
 
-	    public void SetVoxelFast(Voxel voxel, Vector3Int voxelPosition)
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetVoxelFast(Voxel voxel, Vector3Int voxelPosition)
 	    {
 	        _voxels[voxelPosition.X, voxelPosition.Y, voxelPosition.Z] = voxel;
 	    }
 
-	    public Voxel GetVoxel(Vector3Int voxelPosition)
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Voxel GetVoxel(Vector3Int voxelPosition)
 	    {
-	        if (voxelPosition.X >= 0 && voxelPosition.Y >= 0 && voxelPosition.Z >= 0 && 
+            if(voxelPosition.Y < 0)
+                return Voxel.Mask; // Do not show bottom faces at chunks located at [Y: 0]
+
+            if (voxelPosition.X >= 0 && voxelPosition.Y >= 0 && voxelPosition.Z >= 0 && 
 	            voxelPosition.X < ChunkWidth && voxelPosition.Y < ChunkHeight && voxelPosition.Z < ChunkLength)
 	            return GetVoxelFast(voxelPosition);
 
             return Voxel.Air; // TODO: Read from neighbor
 	    }
 
-	    public void SetVoxel(Voxel voxel, Vector3Int voxelPosition)
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetVoxel(Voxel voxel, Vector3Int voxelPosition)
 	    {
+	        if (voxelPosition.Y < 0)
+	            return;
+
 	        throw new NotImplementedException();
         }
 
-        public Vector3Int WorldPosition { get; private set; }
-	    public Vector3Int OffsetPosition { get; private set; }
+        public Vector3Int WorldPosition { get; }
+	    public Vector3Int OffsetPosition { get; }
 	}
 }

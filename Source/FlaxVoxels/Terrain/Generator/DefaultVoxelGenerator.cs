@@ -1,5 +1,5 @@
-﻿
-using System;
+﻿// FlaxVoxels (c) 2018 Damian 'Erdroy' Korczowski
+
 using FlaxVoxels.Math;
 
 namespace FlaxVoxels.Terrain.Generator
@@ -25,6 +25,11 @@ namespace FlaxVoxels.Terrain.Generator
 	                }
                 }
             }
-	    }
+
+	        voxels[8, 9, 8] = Voxel.Solid;
+            voxels[8, 8, 8] = Voxel.Solid;
+	        voxels[9, 8, 8] = Voxel.Solid;
+	        voxels[9, 8, 9] = Voxel.Solid;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿
+﻿// FlaxVoxels (c) 2018 Damian 'Erdroy' Korczowski
+
 namespace FlaxVoxels.Terrain
 {
 	public struct Voxel

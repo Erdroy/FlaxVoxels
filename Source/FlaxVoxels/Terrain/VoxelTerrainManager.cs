@@ -1,4 +1,5 @@
-﻿
+﻿// FlaxVoxels (c) 2018 Damian 'Erdroy' Korczowski
+
 using System.Collections.Generic;
 using FlaxEngine;
 using FlaxVoxels.Math;
@@ -30,10 +31,10 @@ namespace FlaxVoxels.Terrain
 
             // Create temporary test chunk
             _testChunk = new VoxelTerrainChunk(new Vector3Int(0, 0, 0));
-
+            
 	        _testChunk.WorkerGenerateVoxels(_currentGenerator);
             _testChunk.WorkerGenerateMesh(_currentMesher);
-	    }
+        }
 
         private void Update()
         {
@@ -74,7 +75,7 @@ namespace FlaxVoxels.Terrain
         /// After this time, all resources of a cached chunk will be released.
         /// </summary>
         public int MaxChunkCacheTime { get; set; } = 60;
-
+        
         /// <summary>
         /// The current active voxel terrain manager.
         /// </summary>
