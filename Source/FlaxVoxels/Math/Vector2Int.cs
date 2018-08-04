@@ -14,22 +14,22 @@ namespace FlaxVoxels.Math
 
 	    public static Vector2Int operator +(Vector2Int l, Vector2Int r)
 	    {
-	        return new Vector2Int(l.X + r.X, l.Y + l.Y);
+	        return new Vector2Int(l.X + r.X, l.Y + r.Y);
 	    }
 
 	    public static Vector2Int operator -(Vector2Int l, Vector2Int r)
 	    {
-	        return new Vector2Int(l.X - r.X, l.Y - l.Y);
+	        return new Vector2Int(l.X - r.X, l.Y - r.Y);
 	    }
 
 	    public static Vector2Int operator *(Vector2Int l, Vector2Int r)
 	    {
-	        return new Vector2Int(l.X * r.X, l.Y * l.Y);
+	        return new Vector2Int(l.X * r.X, l.Y * r.Y);
 	    }
 
 	    public static Vector2Int operator /(Vector2Int l, Vector2Int r)
 	    {
-	        return new Vector2Int(l.X / r.X, l.Y / l.Y);
+	        return new Vector2Int(l.X / r.X, l.Y / r.Y);
 	    }
 
 	    public static bool operator ==(Vector2Int l, Vector2Int r)

@@ -16,22 +16,22 @@ namespace FlaxVoxels.Math
 
 	    public static Vector3Int operator +(Vector3Int l, Vector3Int r)
 	    {
-	        return new Vector3Int(l.X + r.X, l.Y + l.Y, l.Z + r.Z);
+	        return new Vector3Int(l.X + r.X, l.Y + r.Y, l.Z + r.Z);
 	    }
 
 	    public static Vector3Int operator -(Vector3Int l, Vector3Int r)
 	    {
-	        return new Vector3Int(l.X - r.X, l.Y - l.Y, l.Z - r.Z);
+	        return new Vector3Int(l.X - r.X, l.Y - r.Y, l.Z - r.Z);
 	    }
         
 	    public static Vector3Int operator *(Vector3Int l, Vector3Int r)
 	    {
-	        return new Vector3Int(l.X * r.X, l.Y * l.Y, l.Z * r.Z);
+	        return new Vector3Int(l.X * r.X, l.Y * r.Y, l.Z * r.Z);
 	    }
 
 	    public static Vector3Int operator /(Vector3Int l, Vector3Int r)
 	    {
-	        return new Vector3Int(l.X / r.X, l.Y / l.Y, l.Z / r.Z);
+	        return new Vector3Int(l.X / r.X, l.Y / r.Y, l.Z / r.Z);
 	    }
 
         public static bool operator ==(Vector3Int l, Vector3Int r)
