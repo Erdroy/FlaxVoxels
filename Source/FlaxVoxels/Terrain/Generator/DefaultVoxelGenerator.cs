@@ -10,12 +10,13 @@ namespace FlaxVoxels.Terrain.Generator
         {
             Simplex.Noise.Seed = VoxelTerrainManager.Current.WorldSeed;
             Simplex.Noise.OffsetX = worldPosition.X;
-            Simplex.Noise.OffsetZ = worldPosition.Z;
+            Simplex.Noise.OffsetY = worldPosition.Z;
+            Simplex.Noise.OffsetZ = worldPosition.Y;
 
             var noise2D = Simplex.Noise.Calc2D(VoxelTerrainChunk.ChunkWidth, VoxelTerrainChunk.ChunkLength, 0.025f);
 
-            const float baseLevel = 2.0f;
-            const float hillLevel = 5.0f;
+            const float baseLevel = 10.0f;
+            const float hillLevel = 8.0f;
 
             for (var y = 0; y < VoxelTerrainChunk.ChunkHeight; y++)
             for (var x = 0; x < VoxelTerrainChunk.ChunkWidth; x++)
@@ -24,7 +25,7 @@ namespace FlaxVoxels.Terrain.Generator
                 var noise = (noise2D[x, z] / 256.0f) * hillLevel;
                 noise += baseLevel;
 
-                if (y > noise)
+                if (worldPosition.Y + y > noise)
                     continue;
                 
                 voxels[x, y, z] = new Voxel(1); // TODO: Use proper material
