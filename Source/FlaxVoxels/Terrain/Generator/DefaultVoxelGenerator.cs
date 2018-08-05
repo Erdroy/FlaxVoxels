@@ -23,8 +23,8 @@ namespace FlaxVoxels.Terrain.Generator
             // Calculate noise
             var noise2D = Noise.Calc2D(VoxelTerrainChunk.ChunkWidth, VoxelTerrainChunk.ChunkLength, 0.025f);
 
-            const float baseLevel = 10.0f;
-            const float hillLevel = 8.0f;
+            const float baseLevel = 16.0f;
+            const float hillLevel = 12.0f;
 
             for (var y = 0; y < VoxelTerrainChunk.ChunkHeight; y++)
             for (var x = 0; x < VoxelTerrainChunk.ChunkWidth; x++)
@@ -44,7 +44,7 @@ namespace FlaxVoxels.Terrain.Generator
                 var surfaceDistance = terrainHeight - voxelHeight;
 
                 // Check if we are still under surface, if not, then continue to the next voxel.
-                if (voxelHeight > 0)
+                if (surfaceDistance < 0)
                     continue;
                 
                 // Select which block should we used based on distance from surface
