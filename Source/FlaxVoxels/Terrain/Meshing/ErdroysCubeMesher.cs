@@ -9,6 +9,10 @@ using FlaxVoxels.Math;
 
 namespace FlaxVoxels.Terrain.Meshing
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     ErdroysCubeMesher class. Provides Erdroy's Cube meshing algorithm implementation.
+    /// </summary>
     public class ErdroysCubeMesher : IVoxelTerrainMesher
     {
         private static readonly Vector3[] CornerTable =
@@ -48,6 +52,7 @@ namespace FlaxVoxels.Terrain.Meshing
             _triangles = new List<int>();
         }
 
+        /// <inheritdoc />
         public void GenerateMesh(VoxelTerrainChunk chunk)
         {
             // Generate in order: Y [XZ]
@@ -106,11 +111,15 @@ namespace FlaxVoxels.Terrain.Meshing
             Debug.Log("Chunk generated! Vertex count " + _vertices.Count);
 
             // Apply mesh
-            chunk.Model.LODs[0].Meshes[0].UpdateMesh(_vertices.ToArray(), _triangles.ToArray(), _normals.ToArray(), null,
+            chunk.Model.LODs[0].Meshes[0].UpdateMesh(_vertices.ToArray(), _triangles.ToArray(), _normals.ToArray(),
+                null,
                 _uvs.ToArray(), _colors.ToArray());
+
+            // Clear mesher state
+            Clear();
         }
 
-        public void Clear()
+        private void Clear()
         {
             _vertices.Clear();
             _normals.Clear();

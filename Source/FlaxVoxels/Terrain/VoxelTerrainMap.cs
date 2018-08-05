@@ -10,6 +10,9 @@ namespace FlaxVoxels.Terrain
 {
     internal class VoxelTerrainMap
     {
+        /// <summary>
+        ///     ChunkMap class. Provides fast chunk map, which can be used for mapping chunks - obvious, huh?
+        /// </summary>
         public class ChunkMap
         {
             /// <summary>
@@ -30,6 +33,10 @@ namespace FlaxVoxels.Terrain
             public readonly VoxelTerrainChunk[,,] Chunks =
                 new VoxelTerrainChunk[ChunkMapWidth, ChunkMapHeight, ChunkMapLength];
 
+            /// <summary>
+            ///     Default constructor.
+            /// </summary>
+            /// <param name="offset">The ChunkMap base offset, this is used to determine offset from other ChunkMaps.</param>
             public ChunkMap(Vector3Int offset)
             {
                 Offset = offset;
@@ -39,40 +46,71 @@ namespace FlaxVoxels.Terrain
                                     VoxelTerrainChunk.ChunkLength);
             }
 
+            /// <summary>
+            ///     Gets chunk at given world position.
+            /// </summary>
+            /// <param name="worldPosition">The world position.</param>
+            /// <returns>The selected chunk or null when chunk is not generated.</returns>
             public VoxelTerrainChunk GetChunk(Vector3Int worldPosition)
             {
                 var offset = WorldToLocalChunk(worldPosition);
                 return Chunks[offset.X, offset.Y, offset.Z];
             }
 
+            /// <summary>
+            ///     Sets chunk at given world position (will be snapped to chunk offset position).
+            /// </summary>
+            /// <param name="chunk">The chunk instance.</param>
+            /// <param name="worldPosition">The world position.</param>
             public void SetChunk(VoxelTerrainChunk chunk, Vector3Int worldPosition)
             {
                 var offset = WorldToLocalChunk(worldPosition);
                 Chunks[offset.X, offset.Y, offset.Z] = chunk;
             }
 
+            /// <summary>
+            ///     Converts world position to chunk offset, but also snapped to the origin of this chunk map.
+            /// </summary>
+            /// <param name="worldPosition">The world position.</param>
+            /// <returns>The snapped local chunk offset.</returns>
             public Vector3Int WorldToLocalChunk(Vector3Int worldPosition)
             {
                 var chunkOffset = WorldToChunkOffset(worldPosition);
 
                 return new Vector3Int
                 {
-                    X = -(WorldPosition.X - chunkOffset.X * VoxelTerrainChunk.ChunkWidth) / VoxelTerrainChunk.ChunkWidth,
-                    Y = -(WorldPosition.Y - chunkOffset.Y * VoxelTerrainChunk.ChunkHeight) / VoxelTerrainChunk.ChunkHeight,
-                    Z = -(WorldPosition.Z - chunkOffset.Z * VoxelTerrainChunk.ChunkLength) / VoxelTerrainChunk.ChunkLength,
+                    X = -(WorldPosition.X - chunkOffset.X * VoxelTerrainChunk.ChunkWidth) /
+                        VoxelTerrainChunk.ChunkWidth,
+                    Y = -(WorldPosition.Y - chunkOffset.Y * VoxelTerrainChunk.ChunkHeight) /
+                        VoxelTerrainChunk.ChunkHeight,
+                    Z = -(WorldPosition.Z - chunkOffset.Z * VoxelTerrainChunk.ChunkLength) /
+                        VoxelTerrainChunk.ChunkLength
                 };
             }
 
+            /// <summary>
+            ///     Converts chunk offset position to offset snapped to the origin of this chunk map.
+            /// </summary>
+            /// <param name="chunkOffset">The chunk offset position.</param>
+            /// <returns>The snapped local chunk offset.</returns>
             public Vector3Int ChunkToLocalChunk(Vector3Int chunkOffset)
             {
                 return new Vector3Int
                 {
-                    X = -(WorldPosition.X - chunkOffset.X * VoxelTerrainChunk.ChunkWidth) / VoxelTerrainChunk.ChunkWidth,
-                    Y = -(WorldPosition.Y - chunkOffset.Y * VoxelTerrainChunk.ChunkHeight) / VoxelTerrainChunk.ChunkHeight,
-                    Z = -(WorldPosition.Z - chunkOffset.Z * VoxelTerrainChunk.ChunkLength) / VoxelTerrainChunk.ChunkLength,
+                    X = -(WorldPosition.X - chunkOffset.X * VoxelTerrainChunk.ChunkWidth) /
+                        VoxelTerrainChunk.ChunkWidth,
+                    Y = -(WorldPosition.Y - chunkOffset.Y * VoxelTerrainChunk.ChunkHeight) /
+                        VoxelTerrainChunk.ChunkHeight,
+                    Z = -(WorldPosition.Z - chunkOffset.Z * VoxelTerrainChunk.ChunkLength) /
+                        VoxelTerrainChunk.ChunkLength
                 };
             }
 
+            /// <summary>
+            ///     Snaps world position to chunk grid.
+            /// </summary>
+            /// <param name="worldPosition">The world position.</param>
+            /// <returns>The snapped world position.</returns>
             public static Vector3Int WorldToChunkWorld(Vector3Int worldPosition)
             {
                 var offset = WorldToChunkOffset(worldPosition);
@@ -81,10 +119,15 @@ namespace FlaxVoxels.Terrain
                 {
                     X = offset.X * VoxelTerrainChunk.ChunkWidth,
                     Y = offset.Y * VoxelTerrainChunk.ChunkHeight,
-                    Z = offset.Z * VoxelTerrainChunk.ChunkLength,
+                    Z = offset.Z * VoxelTerrainChunk.ChunkLength
                 };
             }
 
+            /// <summary>
+            ///     Converts world position to chunk offset.
+            /// </summary>
+            /// <param name="worldPosition">The world position.</param>
+            /// <returns>The chunk offset position.</returns>
             public static Vector3Int WorldToChunkOffset(Vector3Int worldPosition)
             {
                 // Snap world position components
@@ -105,6 +148,11 @@ namespace FlaxVoxels.Terrain
                 };
             }
 
+            /// <summary>
+            ///     Converts world position to map offset.
+            /// </summary>
+            /// <param name="worldPosition">The world position.</param>
+            /// <returns>The map offset position.</returns>
             public static Vector3Int WorldToMapOffset(Vector3Int worldPosition)
             {
                 var chunkOffset = WorldToChunkOffset(worldPosition);
@@ -127,17 +175,27 @@ namespace FlaxVoxels.Terrain
                 };
             }
 
+            /// <summary>
+            ///     The base offset of this map.
+            /// </summary>
             public Vector3Int Offset { get; }
+
+            /// <summary>
+            ///     The world position of this map (snapped with chunk map grid).
+            /// </summary>
             public Vector3Int WorldPosition { get; }
         }
 
         private readonly VoxelTerrainChunkCache _chunkCache;
-        
+
         private readonly Dictionary<Vector3Int, ChunkMap> _chunkMaps;
 
         private readonly IVoxelTerrainGenerator _currentGenerator;
         private readonly IVoxelTerrainMesher _currentMesher;
 
+        /// <summary>
+        ///     Default constructor.
+        /// </summary>
         public VoxelTerrainMap()
         {
             _chunkCache = new VoxelTerrainChunkCache();
@@ -147,64 +205,61 @@ namespace FlaxVoxels.Terrain
             _currentGenerator = new DefaultVoxelGenerator();
         }
 
+        /// <summary>
+        ///     Updates this voxel terrain map and chunk cache.
+        /// </summary>
         public void Update()
         {
             // Update chunk cache
             _chunkCache.Update();
         }
 
+        /// <summary>
+        ///     Updates actor views, generates new chunks in it's view ranges
+        ///     and unloads chunks which are out of view of some time (look: VoxelTerrainManager::ChunkPreCacheTime)
+        /// </summary>
+        /// <param name="viewActors">The read-only list of view actors.</param>
         public void UpdateActorViews(IReadOnlyList<Actor> viewActors)
         {
+            // TODO: Auto generation implementation
         }
 
-        private ChunkMap FindChunkMap(Vector3Int worldPosition)
-        {
-            // Convert worldPosition to chunk map offset
-            var offset = ChunkMap.WorldToMapOffset(worldPosition);
-            return _chunkMaps[offset];
-        }
-
-        private ChunkMap FindOrAddChunkMap(Vector3Int worldPosition)
-        {
-            // Convert worldPosition to chunk map offset
-            var offset = ChunkMap.WorldToMapOffset(worldPosition);
-
-            // Try to find the chunk map with the same calculated map offset
-            if (!_chunkMaps.TryGetValue(offset, out var map))
-            {
-                // Not found, create and add
-                map = new ChunkMap(offset);
-
-                // Add chunk map
-                _chunkMaps.Add(offset, map);
-            }
-
-            return map;
-        }
-
+        /// <summary>
+        ///     Creates chunk at given world position, if chunk already exists, the current chunk is being returned
+        ///     and no voxel/mesh generation is required.
+        /// </summary>
+        /// <param name="worldPosition">The world position.</param>
+        /// <returns>The created/found chunk.</returns>
         public VoxelTerrainChunk CreateChunk(Vector3Int worldPosition)
         {
             var chunkMap = FindOrAddChunkMap(worldPosition);
 
+            // Try to find chunk first
+            var chunk = chunkMap.GetChunk(worldPosition);
+            if (chunk != null)
+                return chunk;
+
             // Create temporary test chunk
-            var chunk = new VoxelTerrainChunk(this, worldPosition);
+            chunk = new VoxelTerrainChunk(this, worldPosition);
             chunkMap.SetChunk(chunk, worldPosition);
 
             chunk.WorkerGenerateVoxels(_currentGenerator);
             chunk.WorkerGenerateMesh(_currentMesher);
-
-            // Clear mesher
-            _currentMesher.Clear();
-
+            
             // TODO: Queue for generation and meshing
 
             return chunk;
         }
 
+        /// <summary>
+        ///     Looks for chunk at given world position. Returns null when chunk or chunk map doesn't exist.
+        /// </summary>
+        /// <param name="worldPosition">The world position.</param>
+        /// <returns>The chunk (can be null).</returns>
         public VoxelTerrainChunk FindChunk(Vector3Int worldPosition)
         {
-            var chunkMap = FindOrAddChunkMap(worldPosition);
-            return chunkMap.GetChunk(worldPosition);
+            var chunkMap = FindChunkMap(worldPosition);
+            return chunkMap?.GetChunk(worldPosition);
         }
 
         /// <summary>
@@ -225,6 +280,42 @@ namespace FlaxVoxels.Terrain
 
             // Add chunk to cache
             _chunkCache.Add(chunk);
+        }
+
+        /// <summary>
+        ///     Looks for chunk map at given world position.
+        /// </summary>
+        /// <param name="worldPosition">The world position.</param>
+        /// <returns>The chunk map (can be null when doesn't exist).</returns>
+        public ChunkMap FindChunkMap(Vector3Int worldPosition)
+        {
+            // Convert worldPosition to chunk map offset
+            var offset = ChunkMap.WorldToMapOffset(worldPosition);
+            return _chunkMaps[offset];
+        }
+
+        /// <summary>
+        ///     Looks for chunk map at given world position,
+        ///     when chunk map is not found, this function creates one.
+        /// </summary>
+        /// <param name="worldPosition">The world position.</param>
+        /// <returns>The chunk map.</returns>
+        public ChunkMap FindOrAddChunkMap(Vector3Int worldPosition)
+        {
+            // Convert worldPosition to chunk map offset
+            var offset = ChunkMap.WorldToMapOffset(worldPosition);
+
+            // Try to find the chunk map with the same calculated map offset
+            if (!_chunkMaps.TryGetValue(offset, out var map))
+            {
+                // Not found, create and add
+                map = new ChunkMap(offset);
+
+                // Add chunk map
+                _chunkMaps.Add(offset, map);
+            }
+
+            return map;
         }
 
         /// <summary>
