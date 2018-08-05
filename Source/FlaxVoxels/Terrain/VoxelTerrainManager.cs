@@ -41,7 +41,7 @@ namespace FlaxVoxels.Terrain
         private void Update()
         {
             _terrainMap.Update();
-            _terrainMap.UpdateActorViews(_views);
+            _terrainMap.UpdateViewActors(_views);
         }
 
         /// <summary>

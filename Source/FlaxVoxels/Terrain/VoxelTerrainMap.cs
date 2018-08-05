@@ -207,11 +207,11 @@ namespace FlaxVoxels.Terrain
         }
 
         /// <summary>
-        ///     Updates actor views, generates new chunks in it's view ranges
+        ///     Updates view actors, generates new chunks in it's view ranges
         ///     and destroys (caches) chunks which are out of view.
         /// </summary>
         /// <param name="viewActors">The read-only list of view actors.</param>
-        public void UpdateActorViews(IReadOnlyList<Actor> viewActors)
+        public void UpdateViewActors(IReadOnlyList<Actor> viewActors)
         {
             // TODO: Auto generation implementation
         }

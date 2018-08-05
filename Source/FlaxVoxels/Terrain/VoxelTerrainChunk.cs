@@ -34,6 +34,7 @@ namespace FlaxVoxels.Terrain
 
             // Create chunk actor
             Actor = ModelActor.New();
+            Actor.Name = "VoxelTerrain Chunk";
             Actor.Model = Model;
             Actor.LocalScale = new Vector3(100);
             Actor.LocalPosition = new Vector3(worldPosition.X, worldPosition.Y, worldPosition.Z) * 100.0f;

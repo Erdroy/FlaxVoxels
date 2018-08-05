@@ -48,12 +48,21 @@ namespace FlaxVoxels
 
         private void WorkerProcessOne(GeneratorTask task, IVoxelTerrainGenerator generator, IVoxelTerrainMesher mesher)
         {
+            var chunk = task.Chunk;
+
             // Chunk generation rules/problems:
             // - To generate chunk mesh, the chunk must have all neighbor chunks
             // - Neighbor chunk can be still generating (how to deal with this?)
             // - We cannot make the chunk active (chunk.IsActive=true), until meshing finish
 
             // TODO: Chunk processing implementation
+
+            // Temporary
+            if(task.GenerateVoxels)
+                chunk.WorkerGenerateVoxels(generator);
+
+            if (task.GenerateMesh)
+                chunk.WorkerGenerateMesh(mesher);
         }
 
         private void WorkerFunction(int threadId)
