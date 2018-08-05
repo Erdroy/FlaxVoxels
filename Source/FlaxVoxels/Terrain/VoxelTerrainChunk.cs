@@ -36,6 +36,7 @@ namespace FlaxVoxels.Terrain
             Actor = ModelActor.New();
             Actor.Model = Model;
             Actor.LocalScale = new Vector3(100);
+            Actor.LocalPosition = new Vector3(worldPosition.X, worldPosition.Y, worldPosition.Z) * 100.0f;
             Actor.Entries[0].Material = VoxelTerrainManager.Current.DefaultMaterial;
 
             // Add mesh collider
@@ -53,7 +54,7 @@ namespace FlaxVoxels.Terrain
         internal void WorkerGenerateMesh(IVoxelTerrainMesher mesher)
         {
             // Generate mesh
-            mesher.GenerateMesh(WorldPosition, this);
+            mesher.GenerateMesh(this);
 
             // Update collision info
             UpdateCollision();

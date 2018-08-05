@@ -48,7 +48,7 @@ namespace FlaxVoxels.Terrain.Meshing
             _triangles = new List<int>();
         }
 
-        public void GenerateMesh(Vector3Int worldPosition, VoxelTerrainChunk chunk)
+        public void GenerateMesh(VoxelTerrainChunk chunk)
         {
             // Generate in order: Y [XZ]
             for (var y = 0; y < VoxelTerrainChunk.ChunkHeight; y++)
