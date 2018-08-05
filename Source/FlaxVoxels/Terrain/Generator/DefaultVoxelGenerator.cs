@@ -9,6 +9,9 @@ namespace FlaxVoxels.Terrain.Generator
         public void GenerateVoxels(Vector3Int worldPosition, ref Voxel[,,] voxels)
         {
             Simplex.Noise.Seed = VoxelTerrainManager.Current.WorldSeed;
+            Simplex.Noise.OffsetX = worldPosition.X;
+            Simplex.Noise.OffsetZ = worldPosition.Z;
+
             var noise2D = Simplex.Noise.Calc2D(VoxelTerrainChunk.ChunkWidth, VoxelTerrainChunk.ChunkLength, 0.025f);
 
             const float baseLevel = 2.0f;

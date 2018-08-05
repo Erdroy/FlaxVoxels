@@ -13,11 +13,29 @@ namespace Simplex
     /// </summary>
     public class Noise
     {
+        // ------ MODIFIED CODE (by Erdroy) ------
+        /// <summary>
+        ///     The X offset of noise origin.
+        /// </summary>
+        public static int OffsetX = 0;
+
+        /// <summary>
+        ///     The Y offset of noise origin.
+        /// </summary>
+        public static int OffsetY = 0;
+
+        /// <summary>
+        ///     The Z offset of noise origin.
+        /// </summary>
+        public static int OffsetZ = 0;
+        // ------ END MODIFIED CODE ------
+
         public static float[] Calc1D(int width, float scale)
         {
             float[] values = new float[width];
             for (int i = 0; i < width; i++)
-                values[i] = Generate(i * scale) * 128 + 128;
+                //values[i] = Generate(i * scale) * 128 + 128; // Original
+                values[i] = Generate((OffsetX + i) * scale) * 128 + 128; // Modified (by Erdroy)
             return values;
         }
 
@@ -26,7 +44,8 @@ namespace Simplex
             float[,] values = new float[width, height];
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
-                    values[i, j] = Generate(i * scale, j * scale) * 128 + 128;
+                    //values[i, j] = Generate(i * scale, j * scale) * 128 + 128; // Original
+                    values[i, j] = Generate((OffsetX + i) * scale, (OffsetY + j) * scale) * 128 + 128; // Modified (by Erdroy)
             return values;
         }
 
@@ -36,7 +55,9 @@ namespace Simplex
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     for (int k = 0; k < length; k++)
-                        values[i, j, k] = Generate(i * scale, j * scale, k * scale) * 128 + 128;
+                        //values[i, j, k] = Generate(i * scale, j * scale, k * scale) * 128 + 128; // Original
+                        values[i, j, k] = Generate((OffsetX + i) * scale, (OffsetY + j) * scale, (OffsetZ + k) * scale) * 128 + 128; // Modified (by Erdroy)
+
             return values;
         }
 
