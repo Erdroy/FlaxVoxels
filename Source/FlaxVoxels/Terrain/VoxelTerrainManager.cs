@@ -3,8 +3,6 @@
 using System.Collections.Generic;
 using FlaxEngine;
 using FlaxVoxels.Math;
-using FlaxVoxels.Terrain.Generator;
-using FlaxVoxels.Terrain.Meshing;
 
 namespace FlaxVoxels.Terrain
 {
@@ -14,26 +12,24 @@ namespace FlaxVoxels.Terrain
     public class VoxelTerrainManager : Script
     {
         private readonly List<Actor> _views = new List<Actor>();
-        private IVoxelTerrainGenerator _currentGenerator;
 
-        private IVoxelTerrainMesher _currentMesher;
         private VoxelTerrainMap _terrainMap;
-
-        private VoxelTerrainChunk _testChunk;
 
         private void Start()
         {
             Current = this;
+            _terrainMap = new VoxelTerrainMap();
 
-            _currentMesher = new ErdroysCubeMesher();
-            _currentGenerator = new DefaultVoxelGenerator();
-            _terrainMap = new VoxelTerrainMap(this);
-
-            // Create temporary test chunk
-            _testChunk = new VoxelTerrainChunk(_terrainMap, new Vector3Int(0, 0, 0));
-
-            _testChunk.WorkerGenerateVoxels(_currentGenerator);
-            _testChunk.WorkerGenerateMesh(_currentMesher);
+            for (var y = 0; y < 4; y++)
+            {
+                for (var x = -8; x < 8; x++)
+                {
+                    for (var z = -8; z < 8; z++)
+                    {
+                        _terrainMap.CreateChunk(new Vector3Int(x * 16, y * 16, z * 16));
+                    }
+                }
+            }
         }
 
         private void Update()
