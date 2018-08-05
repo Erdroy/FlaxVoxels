@@ -141,9 +141,13 @@ namespace FlaxVoxels.Terrain.Meshing
             _uvs.Add(Vector2.Zero);
             _uvs.Add(Vector2.Zero);
 
-            _colors.Add(Color.DarkOliveGreen);
-            _colors.Add(Color.DarkOliveGreen);
-            _colors.Add(Color.DarkOliveGreen);
+            // Select material based on the voxel id
+            var material = VoxelTerrainManager.Current.VoxelMaterials[voxel.VoxelId];
+
+            // Add material color
+            _colors.Add(material.BaseColor);
+            _colors.Add(material.BaseColor);
+            _colors.Add(material.BaseColor);
 
             // TODO: Set color as material base color + A is AO
 

@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using FlaxEngine;
+using FlaxVoxels.Materials;
 using FlaxVoxels.Math;
 
 namespace FlaxVoxels.Terrain
@@ -20,16 +21,21 @@ namespace FlaxVoxels.Terrain
             Current = this;
             _terrainMap = new VoxelTerrainMap();
 
-            for (var y = 0; y < 4; y++)
+            // Build material set
+            VoxelMaterials = new VoxelMaterialSet.VoxelMaterial[ushort.MaxValue];
+
+            foreach (var entry in ((VoxelMaterialSet) MaterialSet.CreateInstance()).Materials)
             {
-                for (var x = -8; x < 8; x++)
-                {
-                    for (var z = -8; z < 8; z++)
-                    {
-                        _terrainMap.CreateChunk(new Vector3Int(x * 16, y * 16, z * 16));
-                    }
-                }
+                var material = entry.Material;
+                if (material != null)
+                    VoxelMaterials[material.Id] = material;
             }
+
+            // Build temporary chunks
+            for (var y = 0; y < 4; y++)
+            for (var x = -8; x < 8; x++)
+            for (var z = -8; z < 8; z++)
+                _terrainMap.CreateChunk(new Vector3Int(x * 16, y * 16, z * 16));
         }
 
         private void Update()
@@ -55,6 +61,14 @@ namespace FlaxVoxels.Terrain
         {
             _views.Clear();
         }
+
+        internal VoxelMaterialSet.VoxelMaterial[] VoxelMaterials { get; private set; }
+
+        /// <summary>
+        ///     Voxel material set that will be used to map all voxels with proper materials.
+        /// </summary>
+        [AssetReference(typeof(VoxelMaterialSet))]
+        public JsonAsset MaterialSet { get; set; }
 
         /// <summary>
         ///     The default material used for all solid blocks.

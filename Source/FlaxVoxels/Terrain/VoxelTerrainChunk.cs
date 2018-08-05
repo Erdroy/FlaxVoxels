@@ -167,12 +167,12 @@ namespace FlaxVoxels.Terrain
         /// <summary>
         ///     The base actor of this chunk.
         /// </summary>
-        public ModelActor Actor { get; private set; }
+        public ModelActor Actor { get; }
 
         /// <summary>
         ///     This chunk's collider.
         /// </summary>
-        public MeshCollider Collider { get; private set; }
+        public MeshCollider Collider { get; }
 
         /// <summary>
         ///     The chunk model.
