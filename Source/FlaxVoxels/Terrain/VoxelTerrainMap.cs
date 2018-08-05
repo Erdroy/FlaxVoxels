@@ -3,8 +3,6 @@
 using System.Collections.Generic;
 using FlaxEngine;
 using FlaxVoxels.Math;
-using FlaxVoxels.Terrain.Generator;
-using FlaxVoxels.Terrain.Meshing;
 
 namespace FlaxVoxels.Terrain
 {
@@ -190,9 +188,6 @@ namespace FlaxVoxels.Terrain
 
         private readonly Dictionary<Vector3Int, ChunkMap> _chunkMaps;
 
-        private readonly IVoxelTerrainGenerator _currentGenerator;
-        private readonly IVoxelTerrainMesher _currentMesher;
-
         /// <summary>
         ///     Default constructor.
         /// </summary>
@@ -200,9 +195,6 @@ namespace FlaxVoxels.Terrain
         {
             _chunkCache = new VoxelTerrainChunkCache();
             _chunkMaps = new Dictionary<Vector3Int, ChunkMap>();
-
-            _currentMesher = new ErdroysCubeMesher();
-            _currentGenerator = new DefaultVoxelGenerator();
         }
 
         /// <summary>
@@ -216,7 +208,7 @@ namespace FlaxVoxels.Terrain
 
         /// <summary>
         ///     Updates actor views, generates new chunks in it's view ranges
-        ///     and unloads chunks which are out of view of some time (look: VoxelTerrainManager::ChunkPreCacheTime)
+        ///     and destroys (caches) chunks which are out of view.
         /// </summary>
         /// <param name="viewActors">The read-only list of view actors.</param>
         public void UpdateActorViews(IReadOnlyList<Actor> viewActors)
@@ -242,11 +234,9 @@ namespace FlaxVoxels.Terrain
             // Create temporary test chunk
             chunk = new VoxelTerrainChunk(this, worldPosition);
             chunkMap.SetChunk(chunk, worldPosition);
-
-            chunk.WorkerGenerateVoxels(_currentGenerator);
-            chunk.WorkerGenerateMesh(_currentMesher);
             
-            // TODO: Queue for generation and meshing
+            // Generate whole chunk, this probably will also generate all neighbors
+            VoxelTerrainChunkGenerator.EnqueueGeneration(chunk);
 
             return chunk;
         }
@@ -260,26 +250,6 @@ namespace FlaxVoxels.Terrain
         {
             var chunkMap = FindChunkMap(worldPosition);
             return chunkMap?.GetChunk(worldPosition);
-        }
-
-        /// <summary>
-        ///     Destroys given chunk after cache time. Must be called from main thread.
-        /// </summary>
-        /// <param name="chunk">The chunk which will be destroyed.</param>
-        public void DestroyChunk(VoxelTerrainChunk chunk)
-        {
-            // Destroy chunk now, when cache time less or equal to 0.
-            if (VoxelTerrainManager.Current.MaxChunkCacheTime <= 0)
-            {
-                DestroyChunkNow(chunk);
-                return;
-            }
-
-            // Hide chunk
-            chunk.Hide();
-
-            // Add chunk to cache
-            _chunkCache.Add(chunk);
         }
 
         /// <summary>
@@ -319,11 +289,39 @@ namespace FlaxVoxels.Terrain
         }
 
         /// <summary>
+        ///     Destroys given chunk after cache time. Must be called from main thread.
+        /// </summary>
+        /// <param name="chunk">The chunk which will be destroyed.</param>
+        public void DestroyChunk(VoxelTerrainChunk chunk)
+        {
+            // Destroy chunk now, when cache time less or equal to 0.
+            if (VoxelTerrainManager.Current.MaxChunkCacheTime <= 0)
+            {
+                DestroyChunkNow(chunk);
+                return;
+            }
+
+            // Hide chunk
+            chunk.Hide();
+
+            // Check if this chunk should be always loaded, if true, skip caching and leave it as-is.
+            if (!chunk.CanUnload)
+                return;
+
+            // Add chunk to cache
+            _chunkCache.Add(chunk);
+        }
+
+        /// <summary>
         ///     Destroys given chunk. Must be called from main thread.
         /// </summary>
         /// <param name="chunk">The chunk which will be destroyed.</param>
         public void DestroyChunkNow(VoxelTerrainChunk chunk)
         {
+            // Check if this chunk should be always loaded, if true, leave it as-is.
+            if (!chunk.CanUnload)
+                return;
+
             Object.Destroy(chunk.Actor);
         }
     }

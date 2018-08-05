@@ -20,7 +20,7 @@ namespace FlaxVoxels.Terrain
         {
             Current = this;
             _terrainMap = new VoxelTerrainMap();
-
+            
             // Build material set
             VoxelMaterials = new VoxelMaterialSet.VoxelMaterial[ushort.MaxValue];
 
@@ -74,11 +74,6 @@ namespace FlaxVoxels.Terrain
         ///     The default material used for all solid blocks.
         /// </summary>
         public Material DefaultMaterial { get; set; }
-
-        /// <summary>
-        ///     The maximal amount of threads that can be assigned for terrain generator.
-        /// </summary>
-        public int MaxGeneratorThreads { get; set; } = 4;
 
         /// <summary>
         ///     The maximal amount of time, that chunk can be cached i.e. not visible, but not unloaded.

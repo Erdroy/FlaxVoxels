@@ -54,6 +54,7 @@
     <Compile Include="Source\FlaxVoxels\Terrain\Voxel.cs" />
     <Compile Include="Source\FlaxVoxels\Terrain\VoxelTerrainChunk.cs" />
     <Compile Include="Source\FlaxVoxels\Terrain\VoxelTerrainChunkCache.cs" />
+    <Compile Include="Source\FlaxVoxels\Terrain\VoxelTerrainChunkGenerator.cs" />
     <Compile Include="Source\FlaxVoxels\Terrain\VoxelTerrainManager.cs" />
     <Compile Include="Source\FlaxVoxels\Terrain\VoxelTerrainMap.cs" />
     <Compile Include="Source\FlaxVoxels\Terrain\Generator\DefaultVoxelGenerator.cs" />

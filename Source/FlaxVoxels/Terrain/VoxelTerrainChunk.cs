@@ -155,6 +155,21 @@ namespace FlaxVoxels.Terrain
         }
 
         /// <summary>
+        ///     Returns true when this chunk has generated voxels.
+        /// </summary>
+        public bool HasVoxels { get; internal set; }
+
+        /// <summary>
+        ///     Return true when this chunk has mesh.
+        /// </summary>
+        public bool HasMesh { get; internal set; }
+
+        /// <summary>
+        ///     Gets or sets unload flag. When false, this chunk will never unload.
+        /// </summary>
+        public bool CanUnload { get; set; } = true;
+
+        /// <summary>
         ///     World position of this chunk.
         /// </summary>
         public Vector3Int WorldPosition { get; }

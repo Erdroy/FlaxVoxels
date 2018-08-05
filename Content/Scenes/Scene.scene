@@ -150,13 +150,22 @@
 			"StaticFlags": 0,
 			"Scripts": [
 				{
+					"Name": "FlaxVoxels.VoxelTerrainChunkGenerator",
+					"ID": "5ae00cca41a53764d6e452bc16062663",
+					"V": {
+	"MaxThreads": 4,
+	"ThreadWaitTime": 10,
+	"DefaultThreadPriority": 1
+}
+				},
+				{
 					"Name": "FlaxVoxels.Terrain.VoxelTerrainManager",
 					"ID": "c8fed9e24da36a80a1b82395b99c616c",
 					"V": {
 	"MaterialSet": "bbf396794d5d8a81503c4da97dec3d72",
 	"DefaultMaterial": "0513760144f07f0109f57d9b4867c903",
-	"MaxGeneratorThreads": 4,
 	"MaxChunkCacheTime": 60,
+	"EnableTexturing": true,
 	"WorldSeed": 57005
 }
 				}
