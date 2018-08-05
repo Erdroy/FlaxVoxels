@@ -1,0 +1,57 @@
+{
+	"ID": "bbf396794d5d8a81503c4da97dec3d72",
+	"TypeName": "FlaxVoxels.Materials.VoxelMaterialSet",
+	"EngineBuild": 6163,
+	"Data": {
+	"Materials": [
+		{
+			"Material": {
+				"Id": 1,
+				"Name": "Stone",
+				"BaseColor": {
+					"R": 0.528777838,
+					"G": 0.528777838,
+					"B": 0.528777838,
+					"A": 1.0
+				}
+			}
+		},
+		{
+			"Material": {
+				"Id": 2,
+				"Name": "Dirt",
+				"BaseColor": {
+					"R": 0.5454445,
+					"G": 0.4092816,
+					"B": 0.338320851,
+					"A": 1.0
+				}
+			}
+		},
+		{
+			"Material": {
+				"Id": 3,
+				"Name": "Grass",
+				"BaseColor": {
+					"R": 0.227860451,
+					"G": 0.58988893,
+					"B": 0.146320671,
+					"A": 1.0
+				}
+			}
+		},
+		{
+			"Material": {
+				"Id": 4,
+				"Name": "Sand",
+				"BaseColor": {
+					"R": 1.0,
+					"G": 0.940833151,
+					"B": 0.613020539,
+					"A": 1.0
+				}
+			}
+		}
+	]
+}
+}
