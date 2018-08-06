@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\FlaxVoxels\Gameplay\FreeCameraController.cs" />
     <Compile Include="Source\FlaxVoxels\Materials\VoxelMaterialSet.cs" />
     <Compile Include="Source\FlaxVoxels\Math\Vector2Int.cs" />
     <Compile Include="Source\FlaxVoxels\Math\Vector3Int.cs" />

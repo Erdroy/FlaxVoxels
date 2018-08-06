@@ -1,0 +1,14 @@
+{
+	"ID": "12ec70b946f4f06ef6b7a5847ec5ce94",
+	"TypeName": "FlaxEditor.Content.Settings.WindowsPlatformSettings",
+	"EngineBuild": 6163,
+	"Data": {
+	"FullscreenMode": false,
+	"ScreenWidth": 1280,
+	"ScreenHeight": 720,
+	"ResizableWindow": true,
+	"RunInBackground": false,
+	"ForceSingleInstance": false,
+	"SupportDX10": false
+}
+}

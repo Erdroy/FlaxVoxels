@@ -41,9 +41,10 @@
 			"IsBounded": false,
 			"Settings": {
 				"AO": {
+					"Enabled": false,
 					"Intensity": 0.20000000298023225,
 					"Radius": 0.3499999940395355,
-					"OverrideFlags": 15
+					"OverrideFlags": 1
 				},
 				"Bloom": {},
 				"ToneMapping": {},
@@ -114,8 +115,7 @@
 			},
 			"Brightness": 15.0,
 			"MinRoughness": 0.0,
-			"ShadowsDistance": 2000.0,
-			"ShadowsFadeDistance": 50.0
+			"ShadowsFadeDistance": 300.0
 		},
 		{
 			"TypeID": 25,
@@ -155,7 +155,7 @@
 					"V": {
 	"MaxThreads": 4,
 	"ThreadWaitTime": 10,
-	"DefaultThreadPriority": 1
+	"DefaultThreadPriority": 0
 }
 				},
 				{
@@ -165,7 +165,6 @@
 	"MaterialSet": "bbf396794d5d8a81503c4da97dec3d72",
 	"DefaultMaterial": "0513760144f07f0109f57d9b4867c903",
 	"MaxChunkCacheTime": 60,
-	"EnableTexturing": true,
 	"WorldSeed": 57005
 }
 				}
@@ -178,18 +177,26 @@
 			"Name": "Camera",
 			"Transform": {
 				"Translation": {
-					"X": -458.76495361328127,
-					"Y": 2484.663330078125,
-					"Z": -2676.010009765625
-				},
-				"Orientation": {
-					"X": 0.040272057056427,
-					"Y": 0.9084546566009522,
-					"Z": -0.09007367491722107,
-					"W": 0.4061712324619293
+					"X": 0.0,
+					"Y": 3000.0,
+					"Z": 0.0
 				}
 			},
 			"StaticFlags": 0,
+			"Scripts": [
+				{
+					"Name": "FlaxVoxels.Gameplay.FreeCameraController",
+					"ID": "4e17d6c34ce6e9297c55049677bf984d",
+					"V": {
+	"MouseFiltering": true,
+	"MouseFilteringFrames": 3,
+	"MouseAcceleration": true,
+	"MouseAccelerationMultiplier": 0.7,
+	"MouseSensitivity": 2.0,
+	"CameraSmoothing": 20.0
+}
+				}
+			],
 			"UsePerspective": true,
 			"FOV": 75.0,
 			"Near": 2.0,

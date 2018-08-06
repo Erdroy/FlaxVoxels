@@ -7,6 +7,9 @@
 	"CompanyName": "Flax Engine",
 	"Version": "1.0",
 	"FirstScene": "74a68a984824b4510d12589f199ad68f",
-	"Time": "08a20b2649a7d95de471f2862b376fd7"
+	"Time": "08a20b2649a7d95de471f2862b376fd7",
+	"Graphics": "35fc2e7e45c49441ed293d9d30d66a44",
+	"GameCooking": "7273f99c4bda6c04435ac4801428a727",
+	"WindowsPlatform": "12ec70b946f4f06ef6b7a5847ec5ce94"
 }
 }
