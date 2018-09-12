@@ -107,9 +107,7 @@ namespace FlaxVoxels.Terrain.Meshing
 
             // Check if we have something
             if (_vertices.Count == 0) return;
-
-            Debug.Log("Chunk generated! Vertex count " + _vertices.Count);
-
+            
             // Apply mesh
             chunk.Model.LODs[0].Meshes[0].UpdateMesh(_vertices.ToArray(), _triangles.ToArray(), _normals.ToArray(),
                 null,

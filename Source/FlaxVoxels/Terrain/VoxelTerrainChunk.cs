@@ -54,11 +54,20 @@ namespace FlaxVoxels.Terrain
 
         internal void WorkerGenerateMesh(IVoxelTerrainMesher mesher)
         {
+            // Update neighbors
+            UpdateNeighbors();
+
             // Generate mesh
             mesher.GenerateMesh(this);
 
             // Update collision info
             UpdateCollision();
+        }
+
+        internal void UpdateNeighbors()
+        {
+            // TODO: Get all 26 neighbors
+
         }
 
         /// <summary>
@@ -152,6 +161,10 @@ namespace FlaxVoxels.Terrain
             if (voxelPosition.Y < 0)
                 return;
 
+            if (voxelPosition.X >= 0 && voxelPosition.Y >= 0 && voxelPosition.Z >= 0 &&
+                voxelPosition.X < ChunkWidth && voxelPosition.Y < ChunkHeight && voxelPosition.Z < ChunkLength)
+                SetVoxelFast(voxel, voxelPosition);
+
             throw new NotImplementedException();
         }
 
@@ -199,5 +212,7 @@ namespace FlaxVoxels.Terrain
         ///     Gets chunk visibility state. True when active and visible.
         /// </summary>
         public bool IsVisible => Actor.IsActive;
+
+        public VoxelTerrainChunk[] Neighbors { get; set; }
     }
 }

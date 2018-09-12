@@ -23,7 +23,6 @@ namespace FlaxVoxels
         }
 
         private volatile bool _isRunning;
-        private int _maxThreads = 4;
         private ConcurrentQueue<GeneratorTask> _tasks;
         private Thread[] _threads;
 
@@ -169,17 +168,7 @@ namespace FlaxVoxels
         /// <summary>
         ///     The maximal amount of threads that can be assigned for the generator.
         /// </summary>
-        public int MaxThreads
-        {
-            get => _maxThreads;
-            set
-            {
-                _maxThreads = value;
-                
-                //KillThreads(); // TODO: Uncomment when Application.IsPlaying API is available
-                //SetupThreads();
-            }
-        }
+        public int MaxThreads { get; set; } = 4;
 
         /// <summary>
         ///     The time that thread will wait when there is no any new tasks, 

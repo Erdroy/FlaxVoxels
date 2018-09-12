@@ -21,7 +21,7 @@ namespace FlaxVoxels.Terrain
             /// <summary>
             ///     The amount of chunks in dimension 1 (Y).
             /// </summary>
-            public const int ChunkMapHeight = 32;
+            public const int ChunkMapHeight = 8;
 
             /// <summary>
             ///     The amount of chunks in dimension 2 (Z).

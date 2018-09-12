@@ -31,7 +31,7 @@ namespace FlaxVoxels.Terrain
                     VoxelMaterials[material.Id] = material;
             }
 
-            // Build temporary chunks
+            // Build initial chunks
             for (var y = 0; y < 4; y++)
             for (var x = -8; x < 8; x++)
             for (var z = -8; z < 8; z++)
