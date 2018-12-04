@@ -35,6 +35,11 @@ namespace FlaxVoxels.Math
             return new Vector3Int(l.X / r.X, l.Y / r.Y, l.Z / r.Z);
         }
 
+        public static Vector3Int operator *(Vector3Int l, int r)
+        {
+            return new Vector3Int(l.X * r, l.Y * r, l.Z * r);
+        }
+
         public static bool operator ==(Vector3Int l, Vector3Int r)
         {
             return l.X == r.X && l.Y == r.Y && l.Z == r.Z;
