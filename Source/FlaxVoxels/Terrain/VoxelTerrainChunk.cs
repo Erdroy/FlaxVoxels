@@ -12,6 +12,46 @@ namespace FlaxVoxels.Terrain
     /// </summary>
     public class VoxelTerrainChunk
     {
+        /// <summary>
+        /// Neighboring chunk direction lookup table.
+        /// Contains 26 possible direction in which a neighboring chunk can be found.
+        /// </summary>
+        public static Vector3Int[] NeighborChunkDirections =
+        {
+            // Bottom chunks (9 possible)
+            new Vector3Int(-1, -1, -1),
+            new Vector3Int( 0, -1, -1),
+            new Vector3Int( 1, -1, -1),
+            new Vector3Int(-1, -1,  0),
+            new Vector3Int( 0, -1,  0),
+            new Vector3Int( 1, -1,  0),
+            new Vector3Int(-1, -1,  1),
+            new Vector3Int( 0, -1,  1),
+            new Vector3Int( 1, -1,  1),
+            
+            // Same level chunks (8 possible)
+            new Vector3Int(-1,  0, -1),
+            new Vector3Int( 0,  0, -1),
+            new Vector3Int( 1,  0, -1),
+            new Vector3Int(-1,  0,  0),
+            // [0, 0, 0] (middle chunk)
+            new Vector3Int( 1,  0,  0),
+            new Vector3Int(-1,  0,  1),
+            new Vector3Int( 0,  0,  1),
+            new Vector3Int( 1,  0,  1),
+
+            // Top chunks (9 possible)
+            new Vector3Int(-1,  1, -1),
+            new Vector3Int( 0,  1, -1),
+            new Vector3Int( 1,  1, -1),
+            new Vector3Int(-1,  1,  0),
+            new Vector3Int( 0,  1,  0),
+            new Vector3Int( 1,  1,  0),
+            new Vector3Int(-1,  1,  1),
+            new Vector3Int( 0,  1,  1),
+            new Vector3Int( 1,  1,  1),
+        };
+
         public const int ChunkWidth = 16;
         public const int ChunkHeight = 16;
         public const int ChunkLength = 16;
