@@ -106,7 +106,11 @@ namespace FlaxVoxels.Terrain.Meshing
             }
 
             // Check if we have something
-            if (_vertices.Count == 0) return;
+            if (_vertices.Count == 0)
+            {
+                Clear();
+                return;
+            }
             
             // Apply mesh
             chunk.Model.LODs[0].Meshes[0].UpdateMesh(_vertices.ToArray(), _triangles.ToArray(), _normals.ToArray(),

@@ -62,6 +62,8 @@ namespace FlaxVoxels.Terrain
 
         internal VoxelTerrainChunk(VoxelTerrainMap terrainMap, Vector3Int worldPosition)
         {
+            State = VoxelTerrainChunkState.Uncompleted;
+
             WorldPosition = worldPosition;
             OffsetPosition = new Vector3Int(worldPosition.X / ChunkWidth, worldPosition.Y / ChunkHeight,
                 worldPosition.Z / ChunkLength);
@@ -90,6 +92,7 @@ namespace FlaxVoxels.Terrain
         internal void WorkerGenerateVoxels(IVoxelTerrainGenerator generator)
         {
             generator.GenerateVoxels(WorldPosition, ref _voxels);
+            HasVoxels = true;
         }
 
         internal void WorkerGenerateMesh(IVoxelTerrainMesher mesher)
@@ -102,11 +105,11 @@ namespace FlaxVoxels.Terrain
 
             // Update collision info
             UpdateCollision();
+            HasMesh = true;
         }
 
         internal void UpdateNeighbors()
         {
-            // TODO: Get all 26 neighbors
             Neighbors = new VoxelTerrainChunk[NeighborChunkDirections.Length];
 
             for (var i = 0; i < NeighborChunkDirections.Length; i++)
@@ -192,7 +195,22 @@ namespace FlaxVoxels.Terrain
                 voxelPosition.X < ChunkWidth && voxelPosition.Y < ChunkHeight && voxelPosition.Z < ChunkLength)
                 return GetVoxelFast(voxelPosition);
 
-            return Voxel.Air; // TODO: Read from neighbor
+            var offsetX = voxelPosition.X < 0 ? -16 : voxelPosition.X >= ChunkWidth ? 16 : 0;
+            var offsetY = voxelPosition.Y < 0 ? -16 : voxelPosition.Y >= ChunkWidth ? 16 : 0;
+            var offsetZ = voxelPosition.Z < 0 ? -16 : voxelPosition.Z >= ChunkWidth ? 16 : 0;
+            
+            var chunk = _terrainMap.FindChunk(WorldPosition + new Vector3Int(offsetX, offsetY, offsetZ));
+
+            if (offsetX != 0)
+                voxelPosition.X += offsetX > 0 ? -16 : 16;
+
+            if (offsetY != 0)
+                voxelPosition.Y += offsetY > 0 ? -16 : 16;
+
+            if (offsetZ != 0)
+                voxelPosition.Z += offsetZ > 0 ? -16 : 16;
+
+            return chunk?.GetVoxelFast(voxelPosition) ?? Voxel.Air;
         }
 
         /// <summary>
@@ -258,6 +276,32 @@ namespace FlaxVoxels.Terrain
         /// </summary>
         public bool IsVisible => Actor.IsActive;
 
+        /// <summary>
+        ///     Gets chunk queue state. True when chunk is queued for any type of processing.
+        /// </summary>
+        public bool IsQueued => State == VoxelTerrainChunkState.QueuedForGeneration ||
+                                State == VoxelTerrainChunkState.QueuedForVoxelGeneration || 
+                                State == VoxelTerrainChunkState.QueuedForMeshGeneration;
+
+        /// <summary>
+        ///     Gets chunk processing state. True when chunk is being processed.
+        /// </summary>
+        public bool IsProcessing => State == VoxelTerrainChunkState.GeneratingVoxels ||
+                                    State == VoxelTerrainChunkState.GeneratingMesh;
+
+        /// <summary>
+        ///     Gets complete state. True when chunk is complete.
+        /// </summary>
+        public bool IsComplete => State == VoxelTerrainChunkState.Complete;
+
+        /// <summary>
+        ///     The current chunk state.
+        /// </summary>
+        public VoxelTerrainChunkState State { get; set; }
+
+        /// <summary>
+        ///     Contains all neighboring chunks.
+        /// </summary>
         public VoxelTerrainChunk[] Neighbors { get; set; }
     }
 }

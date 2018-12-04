@@ -229,7 +229,13 @@ namespace FlaxVoxels.Terrain
             // Try to find chunk first
             var chunk = chunkMap.GetChunk(worldPosition);
             if (chunk != null)
+            {
+                // Queue for mesh generation
+                if(chunk.HasVoxels && !chunk.HasMesh)
+                    VoxelTerrainChunkGenerator.EnqueueMeshGeneration(chunk);
+
                 return chunk;
+            }
 
             // Create temporary test chunk
             chunk = new VoxelTerrainChunk(this, worldPosition);

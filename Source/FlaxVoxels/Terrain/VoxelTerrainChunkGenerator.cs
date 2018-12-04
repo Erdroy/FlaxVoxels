@@ -52,16 +52,22 @@ namespace FlaxVoxels
             // Chunk generation rules/problems:
             // - To generate chunk mesh, the chunk must have all neighbor chunks
             // - Neighbor chunk can be still generating (how to deal with this?)
-            // - We cannot make the chunk active (chunk.IsActive=true), until meshing finish
+            // - We cannot make the chunk active (chunk.IsActive=true), until meshing finishes
 
             // TODO: Chunk processing implementation
 
             // Temporary
-            if(task.GenerateVoxels)
+            if (task.GenerateVoxels)
+            {
+                chunk.State = VoxelTerrainChunkState.GeneratingVoxels;
                 chunk.WorkerGenerateVoxels(generator);
+            }
 
             if (task.GenerateMesh)
+            {
+                chunk.State = VoxelTerrainChunkState.GeneratingMesh;
                 chunk.WorkerGenerateMesh(mesher);
+            }
         }
 
         private void WorkerFunction(int threadId)
@@ -73,16 +79,17 @@ namespace FlaxVoxels
 
             while (_isRunning)
             {
-                // TODO: Try to dequeue, wait some time when no task was fund
-
                 if (!_tasks.TryDequeue(out var task))
                 {
                     Thread.Sleep(ThreadWaitTime);
                     continue;
                 }
-
+                
                 // Process one chunk
                 WorkerProcessOne(task, currentGenerator, currentMesher);
+
+                // Oke, we are done.
+                task.Chunk.State = VoxelTerrainChunkState.Complete;
             }
 
             Debug.Log(string.Format(this + " WorkerThread {0} (managed id: {1}) stopped", threadId, Thread.CurrentThread.ManagedThreadId), this);
@@ -127,6 +134,7 @@ namespace FlaxVoxels
         {
             // TODO: Deal with neighbors
 
+            chunk.State = VoxelTerrainChunkState.QueuedForGeneration;
             Current._tasks.Enqueue(new GeneratorTask
             {
                 Chunk = chunk,
@@ -141,6 +149,7 @@ namespace FlaxVoxels
         /// <param name="chunk">The chunk instance.</param>
         public static void EnqueueVoxelGeneration(VoxelTerrainChunk chunk)
         {
+            chunk.State = VoxelTerrainChunkState.QueuedForVoxelGeneration;
             Current._tasks.Enqueue(new GeneratorTask
             {
                 Chunk = chunk,
@@ -157,6 +166,7 @@ namespace FlaxVoxels
         {
             // TODO: Deal with neighbors
 
+            chunk.State = VoxelTerrainChunkState.GeneratingMesh;
             Current._tasks.Enqueue(new GeneratorTask
             {
                 Chunk = chunk,
