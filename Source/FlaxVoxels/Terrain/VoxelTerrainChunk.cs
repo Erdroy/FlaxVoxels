@@ -33,7 +33,7 @@ namespace FlaxVoxels.Terrain
             Model = Content.CreateVirtualAsset<Model>();
 
             // Create chunk actor
-            Actor = ModelActor.New();
+            Actor = StaticModel.New();
             Actor.Name = "VoxelTerrain Chunk";
             Actor.Model = Model;
             Actor.LocalScale = new Vector3(100);
@@ -44,7 +44,7 @@ namespace FlaxVoxels.Terrain
             Collider = Actor.AddChild<MeshCollider>();
 
             // Set chunk's Actor as children of TerrainManager's actor (not required, but the scene actor list is a lot more clean)
-            VoxelTerrainManager.Current.Actor.AddChild(Actor);
+            VoxelTerrainManager.Current.Actor.AddChild(Actor, true);
         }
 
         internal void WorkerGenerateVoxels(IVoxelTerrainGenerator generator)
@@ -196,7 +196,7 @@ namespace FlaxVoxels.Terrain
         /// <summary>
         ///     The base actor of this chunk.
         /// </summary>
-        public ModelActor Actor { get; }
+        public StaticModel Actor { get; }
 
         /// <summary>
         ///     This chunk's collider.
