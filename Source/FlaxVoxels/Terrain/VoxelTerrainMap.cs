@@ -242,17 +242,6 @@ namespace FlaxVoxels.Terrain
         }
 
         /// <summary>
-        ///     Looks for chunk at given world position. Returns null when chunk or chunk map doesn't exist.
-        /// </summary>
-        /// <param name="worldPosition">The world position.</param>
-        /// <returns>The chunk (can be null).</returns>
-        public VoxelTerrainChunk FindChunk(Vector3Int worldPosition)
-        {
-            var chunkMap = FindChunkMap(worldPosition);
-            return chunkMap?.GetChunk(worldPosition);
-        }
-
-        /// <summary>
         ///     Looks for chunk map at given world position.
         /// </summary>
         /// <param name="worldPosition">The world position.</param>
@@ -261,7 +250,18 @@ namespace FlaxVoxels.Terrain
         {
             // Convert worldPosition to chunk map offset
             var offset = ChunkMap.WorldToMapOffset(worldPosition);
-            return _chunkMaps[offset];
+            return _chunkMaps.TryGetValue(offset, out var map) ? map : null;
+        }
+
+        /// <summary>
+        ///     Looks for chunk at given world position. Returns null when chunk or chunk map doesn't exist.
+        /// </summary>
+        /// <param name="worldPosition">The world position.</param>
+        /// <returns>The chunk (can be null).</returns>
+        public VoxelTerrainChunk FindChunk(Vector3Int worldPosition)
+        {
+            var chunkMap = FindChunkMap(worldPosition);
+            return chunkMap?.GetChunk(worldPosition);
         }
 
         /// <summary>

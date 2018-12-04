@@ -13,8 +13,8 @@ namespace FlaxVoxels.Terrain
     public class VoxelTerrainChunk
     {
         /// <summary>
-        /// Neighboring chunk direction lookup table.
-        /// Contains 26 possible direction in which a neighboring chunk can be found.
+        ///     Neighboring chunk direction lookup table.
+        ///     Contains 26 possible direction in which a neighboring chunk can be found.
         /// </summary>
         public static Vector3Int[] NeighborChunkDirections =
         {
@@ -54,7 +54,7 @@ namespace FlaxVoxels.Terrain
 
         public const int ChunkWidth = 16;
         public const int ChunkHeight = 16;
-        public const int ChunkLength = 16;
+        public const int ChunkLength = 16; // TODO: Unify all of these values into ChunkSize (?)
 
         private readonly VoxelTerrainMap _terrainMap;
 
@@ -107,7 +107,12 @@ namespace FlaxVoxels.Terrain
         internal void UpdateNeighbors()
         {
             // TODO: Get all 26 neighbors
+            Neighbors = new VoxelTerrainChunk[NeighborChunkDirections.Length];
 
+            for (var i = 0; i < NeighborChunkDirections.Length; i++)
+            {
+                Neighbors[i] = _terrainMap.FindChunk(WorldPosition + NeighborChunkDirections[i] * ChunkWidth);
+            }
         }
 
         /// <summary>
