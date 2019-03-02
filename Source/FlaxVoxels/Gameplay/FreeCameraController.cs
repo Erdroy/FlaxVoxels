@@ -1,4 +1,4 @@
-// FlaxVoxels (c) 2018 Damian 'Erdroy' Korczowski
+// FlaxVoxels (c) 2018-2019 Damian 'Erdroy' Korczowski
 
 using System.Collections.Generic;
 using System.Linq;

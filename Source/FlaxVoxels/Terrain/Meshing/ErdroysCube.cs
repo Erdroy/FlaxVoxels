@@ -1,4 +1,4 @@
-// FlaxVoxels (c) 2018 Damian 'Erdroy' Korczowski
+// FlaxVoxels (c) 2018-2019 Damian 'Erdroy' Korczowski
 // Erdroy's Cube meshing algorithm (c) 2016-2018 Damian 'Erdroy' Korczowski
 // License: MIT
 
