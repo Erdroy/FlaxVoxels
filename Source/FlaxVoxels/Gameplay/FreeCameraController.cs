@@ -40,7 +40,7 @@ namespace FlaxVoxels.Gameplay
 
         private void UpdateLook()
         {
-            var cursorDelta = Input.MousePosition - _lastCursorPosition;
+            var cursorDelta = (Input.MousePosition - _lastCursorPosition) * MouseSensitivity;
             _lastCursorPosition = Input.MousePosition;
             
             if (MouseFiltering)
