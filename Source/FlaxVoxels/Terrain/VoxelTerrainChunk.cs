@@ -52,9 +52,9 @@ namespace FlaxVoxels.Terrain
             new Vector3Int( 1,  1,  1),
         };
 
-        public const int ChunkWidth = 16;
-        public const int ChunkHeight = 16;
-        public const int ChunkLength = 16; // TODO: Unify all of these values into ChunkSize (?)
+        public const int Width = 16;
+        public const int Height = 16;
+        public const int Length = 16; // TODO: Unify all of these values into ChunkSize (?)
 
         private readonly VoxelTerrainMap _terrainMap;
 
@@ -65,11 +65,11 @@ namespace FlaxVoxels.Terrain
             State = VoxelTerrainChunkState.Uncompleted;
 
             WorldPosition = worldPosition;
-            OffsetPosition = new Vector3Int(worldPosition.X / ChunkWidth, worldPosition.Y / ChunkHeight,
-                worldPosition.Z / ChunkLength);
+            OffsetPosition = new Vector3Int(worldPosition.X / Width, worldPosition.Y / Height,
+                worldPosition.Z / Length);
 
             _terrainMap = terrainMap;
-            _voxels = new Voxel[ChunkWidth, ChunkHeight, ChunkLength];
+            _voxels = new Voxel[Width, Height, Length];
 
             // Create model
             Model = Content.CreateVirtualAsset<Model>();
@@ -86,7 +86,7 @@ namespace FlaxVoxels.Terrain
             Collider = Actor.AddChild<MeshCollider>();
 
             // Set chunk's Actor as children of TerrainManager's actor (not required, but the scene actor list is a lot more clean)
-            VoxelTerrainManager.Current.Actor.AddChild(Actor, true);
+            VoxelTerrainManager.Current.Actor.AddChild(Actor);
         }
 
         internal void WorkerGenerateVoxels(IVoxelTerrainGenerator generator)
@@ -114,7 +114,7 @@ namespace FlaxVoxels.Terrain
 
             for (var i = 0; i < NeighborChunkDirections.Length; i++)
             {
-                Neighbors[i] = _terrainMap.FindChunk(WorldPosition + NeighborChunkDirections[i] * ChunkWidth);
+                Neighbors[i] = _terrainMap.FindChunk(WorldPosition + NeighborChunkDirections[i] * Width);
             }
         }
 
@@ -192,12 +192,12 @@ namespace FlaxVoxels.Terrain
                 return Voxel.Mask; // Do not show bottom faces at chunks located at [Y: 0]
 
             if (voxelPosition.X >= 0 && voxelPosition.Y >= 0 && voxelPosition.Z >= 0 &&
-                voxelPosition.X < ChunkWidth && voxelPosition.Y < ChunkHeight && voxelPosition.Z < ChunkLength)
+                voxelPosition.X < Width && voxelPosition.Y < Height && voxelPosition.Z < Length)
                 return GetVoxelFast(voxelPosition);
 
-            var offsetX = voxelPosition.X < 0 ? -16 : voxelPosition.X >= ChunkWidth ? 16 : 0;
-            var offsetY = voxelPosition.Y < 0 ? -16 : voxelPosition.Y >= ChunkWidth ? 16 : 0;
-            var offsetZ = voxelPosition.Z < 0 ? -16 : voxelPosition.Z >= ChunkWidth ? 16 : 0;
+            var offsetX = voxelPosition.X < 0 ? -16 : voxelPosition.X >= Width ? 16 : 0;
+            var offsetY = voxelPosition.Y < 0 ? -16 : voxelPosition.Y >= Width ? 16 : 0;
+            var offsetZ = voxelPosition.Z < 0 ? -16 : voxelPosition.Z >= Width ? 16 : 0;
             
             var chunk = _terrainMap.FindChunk(WorldPosition + new Vector3Int(offsetX, offsetY, offsetZ));
 
@@ -222,13 +222,31 @@ namespace FlaxVoxels.Terrain
         public void SetVoxel(Voxel voxel, Vector3Int voxelPosition)
         {
             if (voxelPosition.Y < 0)
-                return;
+                return; // Do not show bottom faces at chunks located at [Y: 0]
 
             if (voxelPosition.X >= 0 && voxelPosition.Y >= 0 && voxelPosition.Z >= 0 &&
-                voxelPosition.X < ChunkWidth && voxelPosition.Y < ChunkHeight && voxelPosition.Z < ChunkLength)
+                voxelPosition.X < Width && voxelPosition.Y < Height && voxelPosition.Z < Length)
+            {
                 SetVoxelFast(voxel, voxelPosition);
+                return;
+            }
 
-            throw new NotImplementedException();
+            var offsetX = voxelPosition.X < 0 ? -16 : voxelPosition.X >= Width ? 16 : 0;
+            var offsetY = voxelPosition.Y < 0 ? -16 : voxelPosition.Y >= Width ? 16 : 0;
+            var offsetZ = voxelPosition.Z < 0 ? -16 : voxelPosition.Z >= Width ? 16 : 0;
+
+            var chunk = _terrainMap.FindChunk(WorldPosition + new Vector3Int(offsetX, offsetY, offsetZ));
+
+            if (offsetX != 0)
+                voxelPosition.X += offsetX > 0 ? -16 : 16;
+
+            if (offsetY != 0)
+                voxelPosition.Y += offsetY > 0 ? -16 : 16;
+
+            if (offsetZ != 0)
+                voxelPosition.Z += offsetZ > 0 ? -16 : 16;
+
+            chunk?.SetVoxelFast(voxel, voxelPosition);
         }
 
         /// <summary>

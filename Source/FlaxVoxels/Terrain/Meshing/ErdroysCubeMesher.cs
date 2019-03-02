@@ -56,9 +56,9 @@ namespace FlaxVoxels.Terrain.Meshing
         public void GenerateMesh(VoxelTerrainChunk chunk)
         {
             // Generate in order: Y [XZ]
-            for (var y = 0; y < VoxelTerrainChunk.ChunkHeight; y++)
-            for (var x = 0; x < VoxelTerrainChunk.ChunkWidth; x++)
-            for (var z = 0; z < VoxelTerrainChunk.ChunkLength; z++)
+            for (var y = 0; y < VoxelTerrainChunk.Height; y++)
+            for (var x = 0; x < VoxelTerrainChunk.Width; x++)
+            for (var z = 0; z < VoxelTerrainChunk.Length; z++)
             {
                 var voxelOffset = new Vector3Int(x, y, z);
                 var voxelOffsetFloat = new Vector3(x, y, z);

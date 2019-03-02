@@ -21,14 +21,14 @@ namespace FlaxVoxels.Terrain.Generator
             Noise.OffsetZ = worldPosition.Y;
             
             // Calculate noise
-            var noise2D = Noise.Calc2D(VoxelTerrainChunk.ChunkWidth, VoxelTerrainChunk.ChunkLength, 0.025f);
+            var noise2D = Noise.Calc2D(VoxelTerrainChunk.Width, VoxelTerrainChunk.Length, 0.025f);
 
             const float baseLevel = 16.0f;
             const float hillLevel = 12.0f;
 
-            for (var y = 0; y < VoxelTerrainChunk.ChunkHeight; y++)
-            for (var x = 0; x < VoxelTerrainChunk.ChunkWidth; x++)
-            for (var z = 0; z < VoxelTerrainChunk.ChunkLength; z++)
+            for (var y = 0; y < VoxelTerrainChunk.Height; y++)
+            for (var x = 0; x < VoxelTerrainChunk.Width; x++)
+            for (var z = 0; z < VoxelTerrainChunk.Length; z++)
             {
                 // Calculate world space voxel Y/height
                 var voxelHeight = worldPosition.Y + y;

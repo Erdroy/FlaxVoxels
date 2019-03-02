@@ -16,20 +16,20 @@ namespace FlaxVoxels.Terrain
             /// <summary>
             ///     The amount of chunks in dimension 0 (X).
             /// </summary>
-            public const int ChunkMapWidth = 512;
+            public const int MapWidth = 512;
 
             /// <summary>
             ///     The amount of chunks in dimension 1 (Y).
             /// </summary>
-            public const int ChunkMapHeight = 8;
+            public const int MapHeight = 8;
 
             /// <summary>
             ///     The amount of chunks in dimension 2 (Z).
             /// </summary>
-            public const int ChunkMapLength = 512;
+            public const int MapLength = 512;
 
             public readonly VoxelTerrainChunk[,,] Chunks =
-                new VoxelTerrainChunk[ChunkMapWidth, ChunkMapHeight, ChunkMapLength];
+                new VoxelTerrainChunk[MapWidth, MapHeight, MapLength];
 
             /// <summary>
             ///     Default constructor.
@@ -39,9 +39,9 @@ namespace FlaxVoxels.Terrain
             {
                 Offset = offset;
                 WorldPosition = offset *
-                                new Vector3Int(ChunkMapWidth, ChunkMapHeight, ChunkMapLength) *
-                                new Vector3Int(VoxelTerrainChunk.ChunkWidth, VoxelTerrainChunk.ChunkHeight,
-                                    VoxelTerrainChunk.ChunkLength);
+                                new Vector3Int(MapWidth, MapHeight, MapLength) *
+                                new Vector3Int(VoxelTerrainChunk.Width, VoxelTerrainChunk.Height,
+                                    VoxelTerrainChunk.Length);
             }
 
             /// <summary>
@@ -77,12 +77,12 @@ namespace FlaxVoxels.Terrain
 
                 return new Vector3Int
                 {
-                    X = -(WorldPosition.X - chunkOffset.X * VoxelTerrainChunk.ChunkWidth) /
-                        VoxelTerrainChunk.ChunkWidth,
-                    Y = -(WorldPosition.Y - chunkOffset.Y * VoxelTerrainChunk.ChunkHeight) /
-                        VoxelTerrainChunk.ChunkHeight,
-                    Z = -(WorldPosition.Z - chunkOffset.Z * VoxelTerrainChunk.ChunkLength) /
-                        VoxelTerrainChunk.ChunkLength
+                    X = -(WorldPosition.X - chunkOffset.X * VoxelTerrainChunk.Width) /
+                        VoxelTerrainChunk.Width,
+                    Y = -(WorldPosition.Y - chunkOffset.Y * VoxelTerrainChunk.Height) /
+                        VoxelTerrainChunk.Height,
+                    Z = -(WorldPosition.Z - chunkOffset.Z * VoxelTerrainChunk.Length) /
+                        VoxelTerrainChunk.Length
                 };
             }
 
@@ -95,12 +95,12 @@ namespace FlaxVoxels.Terrain
             {
                 return new Vector3Int
                 {
-                    X = -(WorldPosition.X - chunkOffset.X * VoxelTerrainChunk.ChunkWidth) /
-                        VoxelTerrainChunk.ChunkWidth,
-                    Y = -(WorldPosition.Y - chunkOffset.Y * VoxelTerrainChunk.ChunkHeight) /
-                        VoxelTerrainChunk.ChunkHeight,
-                    Z = -(WorldPosition.Z - chunkOffset.Z * VoxelTerrainChunk.ChunkLength) /
-                        VoxelTerrainChunk.ChunkLength
+                    X = -(WorldPosition.X - chunkOffset.X * VoxelTerrainChunk.Width) /
+                        VoxelTerrainChunk.Width,
+                    Y = -(WorldPosition.Y - chunkOffset.Y * VoxelTerrainChunk.Height) /
+                        VoxelTerrainChunk.Height,
+                    Z = -(WorldPosition.Z - chunkOffset.Z * VoxelTerrainChunk.Length) /
+                        VoxelTerrainChunk.Length
                 };
             }
 
@@ -115,9 +115,9 @@ namespace FlaxVoxels.Terrain
 
                 return new Vector3Int
                 {
-                    X = offset.X * VoxelTerrainChunk.ChunkWidth,
-                    Y = offset.Y * VoxelTerrainChunk.ChunkHeight,
-                    Z = offset.Z * VoxelTerrainChunk.ChunkLength
+                    X = offset.X * VoxelTerrainChunk.Width,
+                    Y = offset.Y * VoxelTerrainChunk.Height,
+                    Z = offset.Z * VoxelTerrainChunk.Length
                 };
             }
 
@@ -130,19 +130,19 @@ namespace FlaxVoxels.Terrain
             {
                 // Snap world position components
                 if (worldPosition.X < 0)
-                    worldPosition.X -= VoxelTerrainChunk.ChunkWidth - 1;
+                    worldPosition.X -= VoxelTerrainChunk.Width - 1;
 
                 if (worldPosition.Y < 0)
-                    worldPosition.Y -= VoxelTerrainChunk.ChunkHeight - 1;
+                    worldPosition.Y -= VoxelTerrainChunk.Height - 1;
 
                 if (worldPosition.Z < 0)
-                    worldPosition.Z -= VoxelTerrainChunk.ChunkLength - 1;
+                    worldPosition.Z -= VoxelTerrainChunk.Length - 1;
 
                 return new Vector3Int
                 {
-                    X = worldPosition.X / VoxelTerrainChunk.ChunkWidth,
-                    Y = worldPosition.Y / VoxelTerrainChunk.ChunkHeight,
-                    Z = worldPosition.Z / VoxelTerrainChunk.ChunkHeight
+                    X = worldPosition.X / VoxelTerrainChunk.Width,
+                    Y = worldPosition.Y / VoxelTerrainChunk.Height,
+                    Z = worldPosition.Z / VoxelTerrainChunk.Height
                 };
             }
 
@@ -157,19 +157,19 @@ namespace FlaxVoxels.Terrain
 
                 // Snap chunk offset components
                 if (chunkOffset.X < 0)
-                    chunkOffset.X -= ChunkMapWidth - 1;
+                    chunkOffset.X -= MapWidth - 1;
 
                 if (chunkOffset.Y < 0)
-                    chunkOffset.Y -= ChunkMapHeight - 1;
+                    chunkOffset.Y -= MapHeight - 1;
 
                 if (chunkOffset.Z < 0)
-                    chunkOffset.Z -= ChunkMapLength - 1;
+                    chunkOffset.Z -= MapLength - 1;
 
                 return new Vector3Int
                 {
-                    X = chunkOffset.X / ChunkMapWidth,
-                    Y = chunkOffset.Y / ChunkMapHeight,
-                    Z = chunkOffset.Z / ChunkMapLength
+                    X = chunkOffset.X / MapWidth,
+                    Y = chunkOffset.Y / MapHeight,
+                    Z = chunkOffset.Z / MapLength
                 };
             }
 
