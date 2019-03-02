@@ -178,6 +178,7 @@ namespace FlaxVoxels.Terrain
         public void SetVoxelFast(Voxel voxel, Vector3Int voxelPosition)
         {
             _voxels[voxelPosition.X, voxelPosition.Y, voxelPosition.Z] = voxel;
+            IsDirty = true;
         }
 
         /// <summary>
@@ -311,6 +312,12 @@ namespace FlaxVoxels.Terrain
         ///     Gets complete state. True when chunk is complete.
         /// </summary>
         public bool IsComplete => State == VoxelTerrainChunkState.Complete;
+
+        /// <summary>
+        ///     True when this chunk got unprocessed voxel data,
+        ///     eg.: when voxel data changed and there is still missing new mesh with all of these changes.
+        /// </summary>
+        public bool IsDirty { get; internal set; }
 
         /// <summary>
         ///     The current chunk state.
