@@ -1,0 +1,504 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Game.CSharp</name>
+    </assembly>
+    <members>
+        <member name="T:FlaxVoxels.Gameplay.FreeCameraController">
+            <inheritdoc />
+            <summary>
+            FreeCameraController script. Provides basic camera controls.
+            </summary>
+        </member>
+        <member name="T:FlaxVoxels.Materials.VoxelMaterialSet">
+            <summary>
+                VoxelMaterialSet class. Provides API for creating voxel material sets.
+            </summary>
+        </member>
+        <member name="T:FlaxVoxels.Materials.VoxelMaterialSet.VoxelMaterial">
+            <summary>
+                VoxelMaterial set class.
+            </summary>
+        </member>
+        <member name="F:FlaxVoxels.Materials.VoxelMaterialSet.VoxelMaterial.Id">
+            <summary>
+                The voxel id, which gets this material assigned.
+            </summary>
+        </member>
+        <member name="F:FlaxVoxels.Materials.VoxelMaterialSet.VoxelMaterial.Name">
+            <summary>
+                The name of this material.
+            </summary>
+        </member>
+        <member name="F:FlaxVoxels.Materials.VoxelMaterialSet.VoxelMaterial.Hardness">
+            <summary>
+                The material hardness of this material, hardness which is 0, 
+                is indestructible (through dig function, but still can be set with Get/SetVoxel)!
+            </summary>
+        </member>
+        <member name="F:FlaxVoxels.Materials.VoxelMaterialSet.VoxelMaterial.Texture">
+            <summary>
+                The texture of this material, this will be packed into atlas if texturing is enabled.
+            </summary>
+        </member>
+        <member name="F:FlaxVoxels.Materials.VoxelMaterialSet.VoxelMaterial.BaseColor">
+            <summary>
+                The base color of this material, this won't be used when texturing is enabled.
+            </summary>
+        </member>
+        <member name="T:FlaxVoxels.Materials.VoxelMaterialSet.VoxelMaterialEntry">
+            <summary>
+                Wrapper for VoxelMaterial class (to make the editor layout a bit cleaner).
+            </summary>
+        </member>
+        <member name="F:FlaxVoxels.Materials.VoxelMaterialSet.Materials">
+            <summary>
+                The unordered list of materials.
+            </summary>
+        </member>
+        <member name="T:FlaxVoxels.Terrain.Generator.DefaultVoxelGenerator">
+            <inheritdoc />
+            <summary>
+                DefaultVoxelGenerator class. Provides basic IVoxelTerrainGenerator implementation with 
+                single-octave simplex noise-based terrain generation.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.Generator.DefaultVoxelGenerator.GenerateVoxels(FlaxVoxels.Math.Vector3Int,FlaxVoxels.Terrain.Voxel[0:,0:,0:]@)">
+            <inheritdoc />
+        </member>
+        <member name="T:FlaxVoxels.Terrain.IVoxelTerrainGenerator">
+            <summary>
+                IVoxelTerrainGenerator interface. Provides IVoxelTerrainGenerator interface for terrain generation algorithms.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.IVoxelTerrainGenerator.GenerateVoxels(FlaxVoxels.Math.Vector3Int,FlaxVoxels.Terrain.Voxel[0:,0:,0:]@)">
+            <summary>
+                Generates voxels for given chunk's world position and outputs the result in referenced voxels array.
+            </summary>
+            <param name="worldPosition">The chunk world position.</param>
+            <param name="voxels">The voxel array reference.</param>
+        </member>
+        <member name="T:FlaxVoxels.Terrain.Meshing.ErdroysCubeMesher">
+            <inheritdoc />
+            <summary>
+                ErdroysCubeMesher class. Provides Erdroy's Cube meshing algorithm implementation.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.Meshing.ErdroysCubeMesher.GenerateMesh(FlaxVoxels.Terrain.VoxelTerrainChunk)">
+            <inheritdoc />
+        </member>
+        <member name="T:FlaxVoxels.Terrain.VoxelTerrainChunk">
+            <summary>
+                VoxelTerrainChunk class. Implements chunk management, including generating voxels, meshing etc.
+            </summary>
+        </member>
+        <member name="F:FlaxVoxels.Terrain.VoxelTerrainChunk.NeighborChunkDirections">
+            <summary>
+                Neighboring chunk direction lookup table.
+                Contains 26 possible direction in which a neighboring chunk can be found.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainChunk.Show">
+            <summary>
+                Shows this chunk.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainChunk.Hide">
+            <summary>
+                Hides this chunk.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainChunk.UpdateCollision">
+            <summary>
+                Updates chunk's collision data.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainChunk.Destroy">
+            <summary>
+                Deactivates and adds this chunk to cache.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainChunk.DestroyNow">
+            <summary>
+                Destroys this chunk.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainChunk.GetVoxelFast(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Gets voxel from this chunk without any checks. Can only access this chunk's voxel data.
+            </summary>
+            <param name="voxelPosition">The local voxel position [X:0-15, Y:0-15, Z:0-15].</param>
+            <returns>The voxel.</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainChunk.SetVoxelFast(FlaxVoxels.Terrain.Voxel,FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Sets voxel in this chunk without any checks. Can only access this chunk's voxel data.
+            </summary>
+            <param name="voxel">The voxel which will be set at given position .</param>
+            <param name="voxelPosition">The local voxel position [X:0-15, Y:0-15, Z:0-15]</param>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainChunk.GetVoxel(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Gets voxel at given position, including all 26 neighbor chunks.
+            </summary>
+            <param name="voxelPosition">The local voxel position [X:0-15, Y:0-15, Z:0-15]</param>
+            <returns>The voxel.</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainChunk.SetVoxel(FlaxVoxels.Terrain.Voxel,FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Sets voxel at given position, including all 26 neighbor chunks.
+            </summary>
+            <param name="voxel">The voxel which will be set at given position .</param>
+            <param name="voxelPosition">The local voxel position [X:0-15, Y:0-15, Z:0-15]</param>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.HasVoxels">
+            <summary>
+                Returns true when this chunk has generated voxels.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.HasMesh">
+            <summary>
+                Return true when this chunk has mesh.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.CanUnload">
+            <summary>
+                Gets or sets unload flag. When false, this chunk will never unload.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.WorldPosition">
+            <summary>
+                World position of this chunk.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.OffsetPosition">
+            <summary>
+                Offset position of this chunk (for ChunkTable).
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.Actor">
+            <summary>
+                The base actor of this chunk.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.Collider">
+            <summary>
+                This chunk's collider.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.Model">
+            <summary>
+                The chunk model.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.IsVisible">
+            <summary>
+                Gets chunk visibility state. True when active and visible.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.IsQueued">
+            <summary>
+                Gets chunk queue state. True when chunk is queued for any type of processing.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.IsProcessing">
+            <summary>
+                Gets chunk processing state. True when chunk is being processed.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.IsComplete">
+            <summary>
+                Gets complete state. True when chunk is complete.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.IsDirty">
+            <summary>
+                True when this chunk got unprocessed voxel data,
+                eg.: when voxel data changed and there is still missing new mesh with all of these changes.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.State">
+            <summary>
+                The current chunk state.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainChunk.Neighbors">
+            <summary>
+                Contains all neighboring chunks.
+            </summary>
+        </member>
+        <member name="T:FlaxVoxels.Terrain.VoxelTerrainManager">
+            <summary>
+                Voxel terrain manager. Manages all voxel-terrain related stuff, chunk spawning etc.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainManager.AddActorView(FlaxEngine.Actor,System.Single)">
+            <summary>
+                Adds actor to track view. This sets where the terrain is generated etc.
+            </summary>
+            <param name="viewActor">The view actor.</param>
+            <param name="viewRangeMul">The view-range multiplier. (Default: 1.0)</param>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainManager.ClearActorViews">
+            <summary>
+                Clears view track list.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainManager.MaterialSet">
+            <summary>
+                Voxel material set that will be used to map all voxels with proper materials.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainManager.DefaultMaterial">
+            <summary>
+                The default material used for all solid blocks.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainManager.MaxChunkCacheTime">
+            <summary>
+                The maximal amount of time, that chunk can be cached i.e. not visible, but not unloaded.
+                After this time, all resources of a cached chunk will be released.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainManager.WorldSeed">
+            <summary>
+                The world seed.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainManager.Current">
+            <summary>
+                The current active voxel terrain manager.
+            </summary>
+        </member>
+        <member name="T:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap">
+            <summary>
+                ChunkMap class. Provides fast chunk map, which can be used for mapping chunks - obvious, huh?
+            </summary>
+        </member>
+        <member name="F:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.MapWidth">
+            <summary>
+                The amount of chunks in dimension 0 (X).
+            </summary>
+        </member>
+        <member name="F:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.MapHeight">
+            <summary>
+                The amount of chunks in dimension 1 (Y).
+            </summary>
+        </member>
+        <member name="F:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.MapLength">
+            <summary>
+                The amount of chunks in dimension 2 (Z).
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.#ctor(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Default constructor.
+            </summary>
+            <param name="offset">The ChunkMap base offset, this is used to determine offset from other ChunkMaps.</param>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.GetChunk(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Gets chunk at given world position.
+            </summary>
+            <param name="worldPosition">The world position.</param>
+            <returns>The selected chunk or null when chunk is not generated.</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.SetChunk(FlaxVoxels.Terrain.VoxelTerrainChunk,FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Sets chunk at given world position (will be snapped to chunk offset position).
+            </summary>
+            <param name="chunk">The chunk instance.</param>
+            <param name="worldPosition">The world position.</param>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.WorldToLocalChunk(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Converts world position to chunk offset, but also snapped to the origin of this chunk map.
+            </summary>
+            <param name="worldPosition">The world position.</param>
+            <returns>The snapped local chunk offset.</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.ChunkToLocalChunk(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Converts chunk offset position to offset snapped to the origin of this chunk map.
+            </summary>
+            <param name="chunkOffset">The chunk offset position.</param>
+            <returns>The snapped local chunk offset.</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.WorldToChunkWorld(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Snaps world position to chunk grid.
+            </summary>
+            <param name="worldPosition">The world position.</param>
+            <returns>The snapped world position.</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.WorldToChunkOffset(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Converts world position to chunk offset.
+            </summary>
+            <param name="worldPosition">The world position.</param>
+            <returns>The chunk offset position.</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.WorldToMapOffset(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Converts world position to map offset.
+            </summary>
+            <param name="worldPosition">The world position.</param>
+            <returns>The map offset position.</returns>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.Offset">
+            <summary>
+                The base offset of this map.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.Terrain.VoxelTerrainMap.ChunkMap.WorldPosition">
+            <summary>
+                The world position of this map (snapped with chunk map grid).
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.#ctor">
+            <summary>
+                Default constructor.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.Update">
+            <summary>
+                Updates this voxel terrain map and chunk cache.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.UpdateViewActors(System.Collections.Generic.IReadOnlyList{FlaxEngine.Actor})">
+            <summary>
+                Updates view actors, generates new chunks in it's view ranges
+                and destroys (caches) chunks which are out of view.
+            </summary>
+            <param name="viewActors">The read-only list of view actors.</param>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.CreateChunk(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Creates chunk at given world position, if chunk already exists, the current chunk is being returned
+                and no voxel/mesh generation is required.
+            </summary>
+            <param name="worldPosition">The world position.</param>
+            <returns>The created/found chunk.</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.FindChunkMap(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Looks for chunk map at given world position.
+            </summary>
+            <param name="worldPosition">The world position.</param>
+            <returns>The chunk map (can be null when doesn't exist).</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.FindChunk(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Looks for chunk at given world position. Returns null when chunk or chunk map doesn't exist.
+            </summary>
+            <param name="worldPosition">The world position.</param>
+            <returns>The chunk (can be null).</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.FindOrAddChunkMap(FlaxVoxels.Math.Vector3Int)">
+            <summary>
+                Looks for chunk map at given world position,
+                when chunk map is not found, this function creates one.
+            </summary>
+            <param name="worldPosition">The world position.</param>
+            <returns>The chunk map.</returns>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.DestroyChunk(FlaxVoxels.Terrain.VoxelTerrainChunk)">
+            <summary>
+                Destroys given chunk after cache time. Must be called from main thread.
+            </summary>
+            <param name="chunk">The chunk which will be destroyed.</param>
+        </member>
+        <member name="M:FlaxVoxels.Terrain.VoxelTerrainMap.DestroyChunkNow(FlaxVoxels.Terrain.VoxelTerrainChunk)">
+            <summary>
+                Destroys given chunk. Must be called from main thread.
+            </summary>
+            <param name="chunk">The chunk which will be destroyed.</param>
+        </member>
+        <member name="T:FlaxVoxels.IVoxelTerrainMesher">
+            <summary>
+                IVoxelTerrainMesher interface. Provides IVoxelTerrainMesher interface for terrain mesh generation algorithms.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.IVoxelTerrainMesher.GenerateMesh(FlaxVoxels.Terrain.VoxelTerrainChunk)">
+            <summary>
+                Generates mesh for given chunk.
+            </summary>
+            <param name="chunk">The terrain chunk.</param>
+        </member>
+        <member name="T:FlaxVoxels.VoxelTerrainChunkGenerator">
+            <summary>
+                VoxelTerrainChunkGenerator class. Provides multi-threaded chunk generation.
+            </summary>
+        </member>
+        <member name="M:FlaxVoxels.VoxelTerrainChunkGenerator.EnqueueGeneration(FlaxVoxels.Terrain.VoxelTerrainChunk)">
+            <summary>
+                Enqueue chunk for voxel generation and meshing.
+            </summary>
+            <param name="chunk">The chunk instance.</param>
+        </member>
+        <member name="M:FlaxVoxels.VoxelTerrainChunkGenerator.EnqueueVoxelGeneration(FlaxVoxels.Terrain.VoxelTerrainChunk)">
+            <summary>
+                Enqueue chunk for voxel generation.
+            </summary>
+            <param name="chunk">The chunk instance.</param>
+        </member>
+        <member name="M:FlaxVoxels.VoxelTerrainChunkGenerator.EnqueueMeshGeneration(FlaxVoxels.Terrain.VoxelTerrainChunk)">
+            <summary>
+                Enqueue chunk for meshing.
+            </summary>
+            <param name="chunk">The chunk instance.</param>
+        </member>
+        <member name="P:FlaxVoxels.VoxelTerrainChunkGenerator.MaxThreads">
+            <summary>
+                The maximal amount of threads that can be assigned for the generator.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.VoxelTerrainChunkGenerator.ThreadWaitTime">
+            <summary>
+                The time that thread will wait when there is no any new tasks, 
+                after this time the thread will be trying to dequeue next task.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.VoxelTerrainChunkGenerator.DefaultThreadPriority">
+            <summary>
+                The generator thread priority. Default is BelowNormal.
+            </summary>
+        </member>
+        <member name="P:FlaxVoxels.VoxelTerrainChunkGenerator.Current">
+            <summary>
+                The current active voxel terrain chunk generator instance.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Simplex.Noise" -->
+        <member name="F:Simplex.Noise.OffsetX">
+            <summary>
+                The X offset of noise origin.
+            </summary>
+        </member>
+        <member name="F:Simplex.Noise.OffsetY">
+            <summary>
+                The Y offset of noise origin.
+            </summary>
+        </member>
+        <member name="F:Simplex.Noise.OffsetZ">
+            <summary>
+                The Z offset of noise origin.
+            </summary>
+        </member>
+        <member name="M:Simplex.Noise.Generate(System.Single)">
+            <summary>
+            1D simplex noise
+            </summary>
+            <param name="x"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Simplex.Noise.Generate(System.Single,System.Single)">
+            <summary>
+            2D simplex noise
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
