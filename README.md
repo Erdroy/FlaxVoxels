@@ -2,7 +2,7 @@
 ## Under Active Development // Work In Progress
 FlaxVoxels official source-code repository. Voxel terrain for Flax Engine.
 
-FlaxVoxels uses my own meshing algorithm inspired by MarchingCubes (and it's lookup table), paper will be released soon.
+FlaxVoxels uses my own meshing algorithm inspired by MarchingCubes (and it's lookup table).
 
 # Links
 [FlaxVoxels Roadmap](https://trello.com/b/BRagC3LQ/flaxvoxels) <br>
