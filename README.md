@@ -1,5 +1,4 @@
 # FlaxVoxels
-## Under Active Development // Work In Progress
 FlaxVoxels official source-code repository. Voxel terrain for Flax Engine.
 
 FlaxVoxels uses my own meshing algorithm inspired by MarchingCubes (and it's lookup table).
