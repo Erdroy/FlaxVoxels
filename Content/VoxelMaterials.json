@@ -2,5 +2,56 @@
 	"ID": "bbf396794d5d8a81503c4da97dec3d72",
 	"TypeName": "FlaxVoxels.Materials.VoxelMaterialSet",
 	"EngineBuild": 6196,
-	"Data": {}
+	"Data": {
+	"Materials": [
+		{
+			"Material": {
+				"Id": 1,
+				"Hardness": 16,
+				"BaseColor": {
+					"R": 0.0,
+					"G": 0.0,
+					"B": 0.0,
+					"A": 0.0
+				}
+			}
+		},
+		{
+			"Material": {
+				"Id": 2,
+				"Hardness": 16,
+				"BaseColor": {
+					"R": 0.0,
+					"G": 0.0,
+					"B": 0.0,
+					"A": 0.0
+				}
+			}
+		},
+		{
+			"Material": {
+				"Id": 3,
+				"Hardness": 16,
+				"BaseColor": {
+					"R": 0.0,
+					"G": 0.0,
+					"B": 0.0,
+					"A": 0.0
+				}
+			}
+		},
+		{
+			"Material": {
+				"Id": 4,
+				"Hardness": 16,
+				"BaseColor": {
+					"R": 0.0,
+					"G": 0.0,
+					"B": 0.0,
+					"A": 0.0
+				}
+			}
+		}
+	]
+}
 }
