@@ -27,6 +27,14 @@ namespace FlaxVoxels.Terrain.Meshing
             new Vector3(1.0f, 1.0f, 1.0f)
         };
 
+        private static readonly Vector2[] UVTable =
+        {
+            new Vector2(0.0f, 0.0f),
+            new Vector2(0.0f, 1.0f),
+            new Vector2(1.0f, 1.0f),
+            new Vector2(1.0f, 0.0f),
+        };
+
         private static readonly Vector3Int[] FaceTable =
         {
             new Vector3Int(0, 0, 1), // Front face
@@ -97,11 +105,7 @@ namespace FlaxVoxels.Terrain.Meshing
                     var corner1 = cornerData[i + 1];
                     var corner2 = cornerData[i + 2];
 
-                    var vertex0 = voxelOffsetFloat + CornerTable[corner0];
-                    var vertex1 = voxelOffsetFloat + CornerTable[corner1];
-                    var vertex2 = voxelOffsetFloat + CornerTable[corner2];
-
-                    AddTriangle(_vertices.Count, baseVoxel, vertex0, vertex1, vertex2);
+                    AddTriangle(i, _vertices.Count, baseVoxel, voxelOffsetFloat, corner0, corner1, corner2);
                 }
             }
 
@@ -134,8 +138,12 @@ namespace FlaxVoxels.Terrain.Meshing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void AddTriangle(int baseIndex, Voxel voxel, Vector3 v0, Vector3 v1, Vector3 v2)
+        private void AddTriangle(int i, int baseIndex, Voxel voxel, Vector3 voxelOffsetFloat, int corner0, int corner1, int corner2)
         {
+            var v0 = voxelOffsetFloat + CornerTable[corner0];
+            var v1 = voxelOffsetFloat + CornerTable[corner1];
+            var v2 = voxelOffsetFloat + CornerTable[corner2];
+
             _vertices.Add(v0);
             _vertices.Add(v1);
             _vertices.Add(v2);
@@ -151,9 +159,18 @@ namespace FlaxVoxels.Terrain.Meshing
             _normals.Add(normal);
             _normals.Add(normal);
 
-            _uvs.Add(Vector2.Zero);
-            _uvs.Add(Vector2.Zero);
-            _uvs.Add(Vector2.Zero);
+            if (i % 2 == 0)
+            {
+                _uvs.Add(UVTable[0]);
+                _uvs.Add(UVTable[1]);
+                _uvs.Add(UVTable[2]);
+            }
+            else
+            {
+                _uvs.Add(UVTable[2]);
+                _uvs.Add(UVTable[3]);
+                _uvs.Add(UVTable[0]);
+            }
 
             // Select material based on the voxel id
             var material = VoxelTerrainManager.Current.VoxelMaterials[voxel.VoxelId];
