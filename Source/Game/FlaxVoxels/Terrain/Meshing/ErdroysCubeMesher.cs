@@ -117,6 +117,9 @@ namespace FlaxVoxels.Terrain.Meshing
                 null,
                 _uvs.ToArray(), _colors.ToArray());
 
+            // oof?
+            chunk.Model.MaterialSlots[0].Material = VoxelTerrainManager.Current.DefaultMaterial;
+
             // Clear mesher state
             Clear();
         }
