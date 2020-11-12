@@ -95,6 +95,7 @@ namespace FlaxVoxels.Terrain.Meshing
                 // TODO: Different/Custom shapes
 
                 var cornerData = ErdroysCube.ErdroyTable[caseCode];
+                var uvData = ErdroysCube.ErdroyUVTable[caseCode];
 
                 // Build triangles
                 for (var i = 0; i < 36; i += 3)
@@ -105,7 +106,11 @@ namespace FlaxVoxels.Terrain.Meshing
                     var corner1 = cornerData[i + 1];
                     var corner2 = cornerData[i + 2];
 
-                    AddTriangle(i, _vertices.Count, baseVoxel, voxelOffsetFloat, corner0, corner1, corner2);
+                    var uv0 = uvData[i + 0];
+                    var uv1 = uvData[i + 1];
+                    var uv2 = uvData[i + 2];
+
+                    AddTriangle(i, _vertices.Count, baseVoxel, voxelOffsetFloat, corner0, corner1, corner2, uv0, uv1, uv2);
                 }
             }
 
@@ -138,7 +143,7 @@ namespace FlaxVoxels.Terrain.Meshing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void AddTriangle(int i, int baseIndex, Voxel voxel, Vector3 voxelOffsetFloat, int corner0, int corner1, int corner2)
+        private void AddTriangle(int i, int baseIndex, Voxel voxel, Vector3 voxelOffsetFloat, int corner0, int corner1, int corner2, int uv0, int uv1, int uv2)
         {
             var v0 = voxelOffsetFloat + CornerTable[corner0];
             var v1 = voxelOffsetFloat + CornerTable[corner1];
@@ -159,18 +164,19 @@ namespace FlaxVoxels.Terrain.Meshing
             _normals.Add(normal);
             _normals.Add(normal);
 
-            if (i % 2 == 0)
-            {
-                _uvs.Add(UVTable[0]);
-                _uvs.Add(UVTable[1]);
-                _uvs.Add(UVTable[2]);
-            }
-            else
-            {
-                _uvs.Add(UVTable[2]);
-                _uvs.Add(UVTable[3]);
-                _uvs.Add(UVTable[0]);
-            }
+            const int atlasSize = 256;
+            const int textureSize = 16;
+            const float textureSizeUv = textureSize / (float)atlasSize;
+
+            var texture = 17; // TODO: Cleanup
+            var cordX = texture % textureSize;
+            var cordY = texture / textureSize;
+
+            var offset = new Vector2(cordX * textureSizeUv, cordY * textureSizeUv);
+
+            _uvs.Add(UVTable[uv0] * textureSizeUv + offset);
+            _uvs.Add(UVTable[uv1] * textureSizeUv + offset);
+            _uvs.Add(UVTable[uv2] * textureSizeUv + offset);
 
             // Select material based on the voxel id
             var material = VoxelTerrainManager.Current.VoxelMaterials[voxel.VoxelId];
@@ -179,11 +185,9 @@ namespace FlaxVoxels.Terrain.Meshing
             _colors.Add(material.BaseColor);
             _colors.Add(material.BaseColor);
             _colors.Add(material.BaseColor);
-
-            // TODO: Set color as material base color + A is AO
-
-            // TODO: Build UVs
+            
             // TODO: Build AO
+            // TODO: Set color as material base color + A is AO
         }
     }
 }
