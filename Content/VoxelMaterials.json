@@ -7,7 +7,8 @@
 		{
 			"Material": {
 				"Id": 1,
-				"Hardness": 16,
+				"Name": "Stone",
+				"Hardness": 8,
 				"BaseColor": {
 					"R": 0.0,
 					"G": 0.0,
@@ -19,6 +20,7 @@
 		{
 			"Material": {
 				"Id": 2,
+				"Name": "Dirt",
 				"Hardness": 16,
 				"BaseColor": {
 					"R": 0.0,
@@ -31,6 +33,7 @@
 		{
 			"Material": {
 				"Id": 3,
+				"Name": "Grass",
 				"Hardness": 16,
 				"BaseColor": {
 					"R": 0.0,
@@ -43,6 +46,7 @@
 		{
 			"Material": {
 				"Id": 4,
+				"Name": "Sand",
 				"Hardness": 16,
 				"BaseColor": {
 					"R": 0.0,

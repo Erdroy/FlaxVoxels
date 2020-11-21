@@ -168,7 +168,7 @@ namespace FlaxVoxels.Terrain.Meshing
             const int textureSize = 16;
             const float textureSizeUv = textureSize / (float)atlasSize;
 
-            var texture = 17; // TODO: Cleanup
+            var texture = (int)voxel.VoxelId;
             var cordX = texture % textureSize;
             var cordY = texture / textureSize;
 

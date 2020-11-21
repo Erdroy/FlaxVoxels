@@ -39,6 +39,12 @@ namespace FlaxVoxels.Terrain
                 _terrainMap.CreateChunk(new Vector3Int(x * 16, y * 16, z * 16));
         }
 
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            _terrainMap.Shutdown();
+        }
+
         public override void OnUpdate()
         {
             base.OnUpdate();

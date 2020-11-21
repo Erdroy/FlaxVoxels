@@ -198,6 +198,22 @@ namespace FlaxVoxels.Terrain
         }
 
         /// <summary>
+        ///     Releases all resources allocated by the voxel terrain.
+        /// </summary>
+        public void Shutdown()
+        {
+            // Shutdown all chunks
+            foreach (var chunkMap in _chunkMaps.Values)
+            {
+                foreach (var chunk in chunkMap.Chunks)
+                {
+                    chunk.DestroyNow();
+                }
+            }
+            _chunkMaps.Clear();
+        }
+
+        /// <summary>
         ///     Updates this voxel terrain map and chunk cache.
         /// </summary>
         public void Update()
